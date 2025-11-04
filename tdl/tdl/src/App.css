@@ -65,47 +65,47 @@ body, html, #root {
   cursor: pointer;
   box-shadow: var(--shadow);
 }
-
-/* ===== NOVO GRID ===== */
 /* ===== NOVO GRID ===== */
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr 1fr;
   gap: 28px;
-  align-items: stretch; 
+  align-items: stretch; /* Garante alturas iguais entre as colunas */
 }
 
-.mid-column,
+/* COLUNA 2 — Prioridade, Pendentes e Operações */
+.mid-column {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr; /* três blocos iguais */
+  gap: 22px;
+}
+
+/* COLUNA 3 — Calendário e Esta Semana */
 .right-column {
   display: grid;
+  grid-template-rows: 1.5fr 1.5fr; /* dois blocos proporcionais para igualar à altura total da coluna 2 */
   gap: 22px;
-  grid-template-rows: 1fr 1fr 1fr; 
 }
 
-
-.right-column {
-  grid-template-rows: 1fr 1fr; 
-}
-
+/* CARD DE TAREFAS (coluna 1) */
 .tarefas-card {
-  height: 100%;
-  min-height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  height: 100%;
+  min-height: 100%;
 }
 
+/* Garante que todas as colunas fiquem niveladas verticalmente */
 .dashboard-grid > * {
   height: 100%;
 }
 
-.mid-column,
-.right-column {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
+/* Garante que os cards dentro das colunas ocupem toda a altura possível */
+.mid-column > section,
+.right-column > section {
+  height: 100%;
 }
-
 /* Card base glassmorphism */
 section {
   background: var(--glass-bg);
@@ -195,4 +195,126 @@ button {
 button:hover {
   transform: translateY(-2px);
   filter: brightness(1.1);
+}
+
+/* ===== SOMBRAS E ANIMAÇÕES SUAVES ===== */
+
+/* Cards padrão */
+section {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+/* Hover com leve elevação */
+section:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Animação de entrada suave (fade + slide) */
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Aplica a animação de entrada aos cards */
+section {
+  animation: fadeSlideIn 0.5s ease both;
+}
+
+/* Pequeno delay alternado para efeito “em cascata” */
+.dashboard-grid section:nth-child(1) { animation-delay: 0.05s; }
+.dashboard-grid section:nth-child(2) { animation-delay: 0.1s; }
+.dashboard-grid section:nth-child(3) { animation-delay: 0.15s; }
+.dashboard-grid section:nth-child(4) { animation-delay: 0.2s; }
+.dashboard-grid section:nth-child(5) { animation-delay: 0.25s; }
+.dashboard-grid section:nth-child(6) { animation-delay: 0.3s; }
+
+
+/* ===== Responsividade ===== */
+
+/* Telas grandes (padrão desktop) já estão bem ajustadas */
+
+/* Telas médias (tablets) */
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .tarefas-card {
+    min-height: 400px;
+  }
+
+  .mid-column,
+  .right-column {
+    gap: 18px;
+  }
+
+  .main {
+    padding: 30px;
+  }
+
+  section {
+    padding: 22px;
+  }
+}
+
+/* Telas pequenas (celulares) */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .main {
+    padding: 20px;
+  }
+
+  .top-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tarefas-card {
+    min-height: auto;
+  }
+
+  section {
+    padding: 20px;
+  }
+
+  .bell {
+    align-self: flex-end;
+  }
+}
+
+/* Telas muito pequenas */
+@media (max-width: 480px) {
+  h3 {
+    font-size: 16px;
+  }
+
+  button {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .top-bar input {
+    height: 40px;
+  }
+
+  section {
+    padding: 18px;
+  }
 }
