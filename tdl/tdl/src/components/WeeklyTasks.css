@@ -1,0 +1,19 @@
+.weekly {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .weekly h3 {
+    color: #fff;
+    margin-top: 0;
+  }
+  .weekly label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  .weekly input[type="checkbox"] {
+    accent-color: #fff;
+  }
+  

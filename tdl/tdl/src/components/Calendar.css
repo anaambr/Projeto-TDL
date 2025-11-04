@@ -1,0 +1,26 @@
+.calendar {
+  text-align: center;
+}
+.calendar header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.calendar table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.calendar th {
+  padding: 6px;
+  color: var(--accent-blue);
+}
+.calendar td {
+  padding: 8px;
+  color: var(--muted-text);
+}
+.calendar td:hover {
+  background: rgba(108, 99, 255, 0.1);
+  border-radius: 6px;
+  cursor: pointer;
+}
