@@ -299,6 +299,45 @@ section {
   }
 }
 
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 40px;
+
+  width: 100%;
+  max-width: 1200px; /* ⬅ AUMENTADO (950 → 1200) */
+  margin: 0 auto;
+  padding: 20px 150px;
+}
+
+.left-column section,
+.right-column section,
+.calendar-full section {
+  width: 300%;
+  max-width: 740px; /* ⬅ Aumente aqui */
+}
+
+section {
+  min-height: 300px; /* ajuste como quiser (250–400px fica bom) */
+  min-width: 350px;
+}
+
+
+/* CALENDÁRIO EM CIMA — 100% */
+.calendar-full {
+  grid-column: 1 / span 2;
+  width: 100%;
+}
+
+/* Colunas da segunda linha */
+.left-column,
+.right-column {
+  display: flex;
+  justify-content: center;
+}
+
+
 /* Telas muito pequenas */
 @media (max-width: 480px) {
   h3 {

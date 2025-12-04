@@ -1,18 +1,18 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-// COMPONENTES
 import Sidebar from "./components/Sidebar";
 import TaskList from "./components/TaskList";
 import Calendar from "./components/Calendar";
 import WeeklyTasks from "./components/WeeklyTasks";
-import Operations from "./components/Operations";
+import AddTask from "./components/AddTask";
+import { Link } from "react-router-dom";
+
 
 import Achievements from "./components/Achievements";
 import Profile from "./components/Profile";
 import Settings from "./components/Settings";
 import SavedItems from "./components/SavedItems";
-import Chat from "./components/Chat";
 
 import { FaClipboardList, FaLightbulb, FaClock, FaBullhorn } from "react-icons/fa";
 import "./App.css";
@@ -27,47 +27,36 @@ function App() {
 
           <header className="top-bar glass">
             <input type="text" placeholder="Pesquisar tarefa..." />
-            <span className="bell">🔔</span>
+            <Link to="/add-task" className="cadastrar-tarefa">+</Link>
           </header>
 
           <Routes>
-            {/* 🟦 Home / Dashboard */}
             <Route
               path="/"
               element={
                 <div className="dashboard-grid">
 
-                  {/* Coluna 1 */}
-                  <TaskList
-                    title="Tarefas"
-                    count={6}
-                    dark
-                    icon={<FaClipboardList />}
-                    className="tarefas-card"
-                  />
-
-                  {/* Coluna 2 */}
-                  <div className="mid-column">
-                    <TaskList title="Prioridade" count={4} gray icon={<FaLightbulb />} />
-                    <TaskList title="Pendentes" count={2} gray icon={<FaClock />} />
-                    <Operations />
+                  <div className="calendar-full">
+                    <Calendar />
                   </div>
 
-                  {/* Coluna 3 */}
-                  <div className="right-column">
-                    <Calendar />
+                  <div className="left-column">
                     <WeeklyTasks icon={<FaBullhorn />} />
                   </div>
+
+                  <div className="right-column">
+                    <TaskList title="Pendentes" style="color: red"count={2} red icon={<FaClock />} />
+                  </div>
+
                 </div>
               }
             />
 
-            {/* 🟪 Telas Secundárias */}
             <Route path="/profile" element={<Profile />} />
-            <Route path="/chat" element={<Chat />} />
             <Route path="/saved" element={<SavedItems />} />
             <Route path="/achievements" element={<Achievements />} />
             <Route path="/settings" element={<Settings />} />
+
           </Routes>
         </main>
       </div>

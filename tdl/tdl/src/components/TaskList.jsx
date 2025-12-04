@@ -1,10 +1,10 @@
 import React from "react";
 import "./TaskList.css";
 
-const TaskList = ({ title, count, gray, dark, icon }) => {
+const TaskList = ({ title, count, red, dark, icon }) => {
   const classNames = [
     "task-list",
-    gray ? "gray" : "",
+    red ? "red" : "",
     dark ? "card--dark" : ""
   ]
     .filter(Boolean)

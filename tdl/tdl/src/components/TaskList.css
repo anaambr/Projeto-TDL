@@ -9,15 +9,13 @@
     border: 1px solid rgba(15,35,55,0.04);
   }
   
-  /* Inside lists */
   .task-list h3 {
     color: var(--glass-contrast);
     margin-bottom: 12px;
     font-size:20px;
     position:relative;
   }
-  
-  /* labels list style */
+
   .task-list label{
     display:flex;
     align-items:center;

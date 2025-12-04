@@ -27,23 +27,22 @@ const Sidebar = () => {
       <nav>
         <ul>
 
-          {/* PERFIL */}
+          {/* BATE-PAPO */}
+          <li>
+            <NavLink
+              to="/"
+              className={({ isActive }) => (isActive ? "active-link" : "")}
+            >
+              <FaComments /> Home
+            </NavLink>
+          </li>
+
           <li>
             <NavLink
               to="/profile"
               className={({ isActive }) => (isActive ? "active-link" : "")}
             >
               <FaUser /> Perfil
-            </NavLink>
-          </li>
-
-          {/* BATE-PAPO */}
-          <li>
-            <NavLink
-              to="/chat"
-              className={({ isActive }) => (isActive ? "active-link" : "")}
-            >
-              <FaComments /> Bate-papo
             </NavLink>
           </li>
 
