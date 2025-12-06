@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+sqlmodel
+sqlalchemy
+python-jose
+python-multipart
+pydantic
+pydantic-settings
+requests

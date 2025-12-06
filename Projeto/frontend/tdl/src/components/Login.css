@@ -1,0 +1,150 @@
+/* ============================
+   ESTILO GERAL DA PÁGINA LOGIN
+   ============================ */
+
+.auth-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: var(--bg-color, #0f0f0f);
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ============================
+   CARD PRINCIPAL
+   ============================ */
+
+.auth-card {
+  width: 420px;
+  padding: 35px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  animation: fadeIn 0.4s ease-out;
+}
+
+.auth-card h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* ============================
+   FORMULÁRIO
+   ============================ */
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-form label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.auth-form input {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+
+  font-size: 1rem;
+  transition: 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.auth-form input:focus {
+  border-color: #6a5acd;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* ============================
+   BOTÃO
+   ============================ */
+
+.auth-form button {
+  margin-top: 10px;
+  padding: 13px;
+  font-size: 1rem;
+
+  border: none;
+  border-radius: 10px;
+
+  background: linear-gradient(135deg, #6a5acd, #8a79ff);
+  color: #fff;
+  cursor: pointer;
+
+  transition: 0.25s ease;
+  font-weight: 600;
+}
+
+.auth-form button:hover {
+  background: linear-gradient(135deg, #7d6eff, #9b8bff);
+  transform: translateY(-2px);
+}
+
+/* ============================
+   MENSAGENS DE ERRO
+   ============================ */
+
+.auth-error {
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  background: rgba(255, 0, 0, 0.25);
+  border: 1px solid rgba(255, 60, 60, 0.4);
+  font-size: 0.9rem;
+}
+
+/* ============================
+   RODAPÉ / LINKS
+   ============================ */
+
+.auth-footer {
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.auth-footer a {
+  color: #9b8bff;
+  font-weight: 600;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ============================
+   ANIMAÇÃO
+   ============================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

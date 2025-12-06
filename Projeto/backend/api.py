@@ -1,6 +1,8 @@
+from typing import Optional
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.security import HTTPBearer
 from sqlmodel import Session, select
+from pydantic import BaseModel
 
 from database import get_session
 from models import User, Task
@@ -10,7 +12,36 @@ router = APIRouter()
 bearer = HTTPBearer()
 
 
-# Middleware para pegar o usuário do token
+# ============================
+# MODELOS Pydantic (corpo JSON)
+# ============================
+
+class RegisterRequest(BaseModel):
+    name: str
+    email: str
+    password: str
+
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+
+class TaskCreate(BaseModel):
+    title: str
+    description: Optional[str] = ""
+
+
+class TaskUpdate(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+    status: Optional[str] = None
+
+
+# ============================
+# Função para pegar usuário logado
+# ============================
+
 def get_current_user(credentials=Depends(bearer)):
     token = credentials.credentials
     payload = verify_token(token)
@@ -19,24 +50,31 @@ def get_current_user(credentials=Depends(bearer)):
     return payload["user_id"]
 
 
+# ============================
+# ROTAS DE AUTENTICAÇÃO
+# ============================
+
 @router.post("/register")
-def register_user(name: str, email: str, password: str, session: Session = Depends(get_session)):
-    exists = session.exec(select(User).where(User.email == email)).first()
-    if exists:
+def register(data: RegisterRequest, session: Session = Depends(get_session)):
+    existing = session.exec(select(User).where(User.email == data.email)).first()
+    if existing:
         raise HTTPException(status_code=400, detail="Email já cadastrado")
 
-    user = User(name=name, email=email, password=password)
+    user = User(name=data.name, email=data.email, password=data.password)
     session.add(user)
     session.commit()
     session.refresh(user)
 
-    return {"message": "Usuário registrado com sucesso", "user": user}
+    return {"message": "Usuário criado", "user": user}
 
 
 @router.post("/login")
-def login(email: str, password: str, session: Session = Depends(get_session)):
+def login(data: LoginRequest, session: Session = Depends(get_session)):
     user = session.exec(
-        select(User).where(User.email == email, User.password == password)
+        select(User).where(
+            User.email == data.email,
+            User.password == data.password
+        )
     ).first()
 
     if not user:
@@ -46,23 +84,30 @@ def login(email: str, password: str, session: Session = Depends(get_session)):
 
     return {"message": "Login realizado", "token": token, "user": user}
 
+
+# ============================
+# ROTAS DE TAREFAS
+# ============================
+
 @router.post("/tasks")
 def create_task(
-    title: str,
-    description: str = "",
+    data: TaskCreate,
     session: Session = Depends(get_session),
     user_id: int = Depends(get_current_user)
 ):
-    task = Task(title=title, description=description, user_id=user_id)
+    task = Task(
+        title=data.title,
+        description=data.description,
+        user_id=user_id
+    )
     session.add(task)
     session.commit()
     session.refresh(task)
-
     return {"message": "Tarefa criada", "task": task}
 
 
 @router.get("/tasks")
-def list_my_tasks(
+def get_tasks(
     session: Session = Depends(get_session),
     user_id: int = Depends(get_current_user)
 ):
@@ -73,13 +118,10 @@ def list_my_tasks(
 @router.put("/tasks/{task_id}")
 def update_task(
     task_id: int,
-    title: str = None,
-    description: str = None,
-    status: str = None,
+    data: TaskUpdate,
     session: Session = Depends(get_session),
     user_id: int = Depends(get_current_user)
 ):
-
     task = session.get(Task, task_id)
 
     if not task:
@@ -88,12 +130,14 @@ def update_task(
     if task.user_id != user_id:
         raise HTTPException(status_code=403, detail="Você não pode editar esta tarefa")
 
-    if title:
-        task.title = title
-    if description:
-        task.description = description
-    if status:
-        task.status = status
+    if data.title is not None:
+        task.title = data.title
+
+    if data.description is not None:
+        task.description = data.description
+
+    if data.status is not None:
+        task.status = data.status
 
     session.add(task)
     session.commit()
@@ -108,7 +152,6 @@ def delete_task(
     session: Session = Depends(get_session),
     user_id: int = Depends(get_current_user)
 ):
-
     task = session.get(Task, task_id)
 
     if not task:

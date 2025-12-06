@@ -7,7 +7,6 @@ class User(SQLModel, table=True):
     email: str
     password: str
 
-    # Relacionamento com tarefas
     tasks: List["Task"] = Relationship(back_populates="user")
 
 

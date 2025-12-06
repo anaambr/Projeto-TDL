@@ -7,31 +7,35 @@ import {
   FaBookmark,
   FaBullseye,
   FaCog,
-  FaSignOutAlt
+  FaSignOutAlt,
 } from "react-icons/fa";
 
-const Sidebar = () => {
+const Sidebar = ({ user, onLogout }) => {
+  const displayName = user?.name || "Usuário";
+  const username = user?.email || "@user";
+
   return (
     <aside className="sidebar">
-
       {/* Usuário */}
       <div className="user">
         <div className="avatar"></div>
         <p>
-          @user<br />
-          <small>Usuário</small>
+          {username}
+          <br />
+          <small>{displayName}</small>
         </p>
       </div>
 
       {/* Navegação */}
       <nav>
         <ul>
-
           {/* PERFIL */}
           <li>
             <NavLink
               to="/profile"
-              className={({ isActive }) => (isActive ? "active-link" : "")}
+              className={({ isActive }) =>
+                isActive ? "active-link" : ""
+              }
             >
               <FaUser /> Perfil
             </NavLink>
@@ -41,7 +45,9 @@ const Sidebar = () => {
           <li>
             <NavLink
               to="/chat"
-              className={({ isActive }) => (isActive ? "active-link" : "")}
+              className={({ isActive }) =>
+                isActive ? "active-link" : ""
+              }
             >
               <FaComments /> Bate-papo
             </NavLink>
@@ -51,7 +57,9 @@ const Sidebar = () => {
           <li>
             <NavLink
               to="/saved"
-              className={({ isActive }) => (isActive ? "active-link" : "")}
+              className={({ isActive }) =>
+                isActive ? "active-link" : ""
+              }
             >
               <FaBookmark /> Itens salvos
             </NavLink>
@@ -61,33 +69,33 @@ const Sidebar = () => {
           <li>
             <NavLink
               to="/achievements"
-              className={({ isActive }) => (isActive ? "active-link" : "")}
+              className={({ isActive }) =>
+                isActive ? "active-link" : ""
+              }
             >
               <FaBullseye /> Conquistas
             </NavLink>
           </li>
-
         </ul>
       </nav>
 
       {/* Rodapé */}
       <div className="bottom">
-
-        {/* CONFIGURAÇÕES */}
         <li>
           <NavLink
             to="/settings"
-            className={({ isActive }) => (isActive ? "active-link" : "")}
+            className={({ isActive }) =>
+              isActive ? "active-link" : ""
+            }
           >
             <FaCog /> Configurações
           </NavLink>
         </li>
 
         {/* SAIR */}
-        <li className="logout">
+        <li className="logout" onClick={onLogout}>
           <FaSignOutAlt /> Sair
         </li>
-
       </div>
     </aside>
   );
