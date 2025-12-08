@@ -1,39 +1,47 @@
 import React, { useState } from "react";
 import "./Settings.css";
 
-const Settings = () => {
+export default function Settings() {
   const [darkMode, setDarkMode] = useState(false);
+  const [notifications, setNotifications] = useState(true);
+  const [sounds, setSounds] = useState(false);
 
   return (
-    <section className="settings-page">
+    <section className="settings-card">
       <h2>Configurações</h2>
 
       <div className="setting-item">
-        <label>
-          <input 
-            type="checkbox" 
-            checked={darkMode} 
+        <label className="switch-label">
+          <span>Tema escuro</span>
+          <input
+            type="checkbox"
+            checked={darkMode}
             onChange={() => setDarkMode(!darkMode)}
           />
-          Tema escuro
         </label>
       </div>
 
       <div className="setting-item">
-        <label>
-          <input type="checkbox" />
-          Notificações
+        <label className="switch-label">
+          <span>Notificações</span>
+          <input
+            type="checkbox"
+            checked={notifications}
+            onChange={() => setNotifications(!notifications)}
+          />
         </label>
       </div>
 
       <div className="setting-item">
-        <label>
-          <input type="checkbox" />
-          Sons do sistema
+        <label className="switch-label">
+          <span>Sons do sistema</span>
+          <input
+            type="checkbox"
+            checked={sounds}
+            onChange={() => setSounds(!sounds)}
+          />
         </label>
       </div>
     </section>
   );
-};
-
-export default Settings;
+}

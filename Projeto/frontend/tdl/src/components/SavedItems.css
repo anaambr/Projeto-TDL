@@ -1,39 +1,35 @@
-/* SavedItems.css */
-.saved-page {
-  padding: 18px;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 6px 18px rgba(21,32,43,0.06);
-  max-width: 760px;
-  margin: 0 auto;
+.saved-container {
+  background: #f8faff;
+  padding: 28px;
+  border-radius: 18px;
+  border: 2px solid #dce3ea;
+  box-shadow: 0px 6px 18px rgba(0,0,0,0.08);
+  max-width: 640px;
+  margin: 20px auto;
 }
 
-.saved-page h2 {
-  margin: 0 0 12px;
-  font-size: 20px;
+.saved-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #16304a;
+  margin-bottom: 18px;
 }
 
 .saved-list {
-  list-style: none;
-  padding: 0;
-  margin: 10px 0 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
-  gap: 12px;
-}
-
-.saved-card {
-  padding: 12px;
-  border-radius: 10px;
-  background: linear-gradient(180deg,#fffefc,#f6f9ff);
-  box-shadow: 0 6px 14px rgba(17,24,39,0.04);
   display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 600;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.card--dark .saved-card {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.03);
+.saved-item {
+  padding: 12px;
+  background: white;
+  border-radius: 12px;
+  border: 2px solid #dce3ea;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+.saved-item:hover {
+  background: #eef2f7;
 }

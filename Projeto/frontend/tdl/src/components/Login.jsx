@@ -1,74 +1,54 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { apiLogin } from "../api";
-import "./Login.css"; // opcional, só pra estilizar depois
+import "./Login.css";
 
-const Login = ({ onLogin }) => {
+export default function Login({ onLogin }) {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [erro, setErro] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
-
-  const handleSubmit = async (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
-    setErro("");
-    setLoading(true);
 
     try {
       const data = await apiLogin(email, password);
-      // data: { message, token, user }
-      if (onLogin) {
-        onLogin(data);
-      }
+      onLogin(data);
       navigate("/");
     } catch (err) {
-      setErro(err.message || "Erro ao fazer login");
-    } finally {
-      setLoading(false);
+      alert("Erro ao entrar: " + err.message);
     }
-  };
+  }
 
   return (
-    <section className="auth-page">
-      <div className="auth-card glass">
-        <h2>Entrar</h2>
+    <div className="auth-container">
+      <form className="auth-card" onSubmit={handleSubmit}>
+        <h2>Login</h2>
 
-        {erro && <p className="auth-error">{erro}</p>}
+        <label>Email</label>
+        <input
+          type="email"
+          placeholder="Digite seu email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
 
-        <form onSubmit={handleSubmit} className="auth-form">
-          <label>
-            Email
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </label>
+        <label>Senha</label>
+        <input
+          type="password"
+          placeholder="Digite sua senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
 
-          <label>
-            Senha
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </label>
+        <button className="btn-primary">Entrar</button>
 
-          <button type="submit" disabled={loading}>
-            {loading ? "Entrando..." : "Entrar"}
-          </button>
-        </form>
-
-        <p className="auth-footer">
-          Não tem conta? <Link to="/register">Registrar</Link>
+        <p className="switch-text">
+          Ainda não tem conta? <Link to="/register">Criar conta</Link>
         </p>
-      </div>
-    </section>
+      </form>
+    </div>
   );
-};
-
-export default Login;
+}

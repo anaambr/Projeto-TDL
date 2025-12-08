@@ -1,0 +1,40 @@
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.task-form input,
+.task-form select,
+.task-form textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid #cdd6dd;
+  font-size: 15px;
+  color: #000;
+  background: #fff;
+}
+
+.task-form textarea {
+  resize: none;
+  height: 120px;
+}
+
+.task-btn {
+  margin-top: 10px;
+  padding: 12px;
+  width: 100%;
+  background: #16304a;
+  color: white;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.task-btn:hover {
+  background: #1d4160;
+}

@@ -1,51 +1,86 @@
-/* TaskList.css */
-/* The main "Tarefas" large card is the leftmost column and taller */
-.task-list {
-    grid-column: 1 / 2;
-    min-height: 240px;
-  }
-  .task-list.gray {
-    background: linear-gradient(180deg, rgba(243,246,249,0.8), rgba(240,244,247,0.8));
-    border: 1px solid rgba(15,35,55,0.04);
-  }
-  
-  /* Inside lists */
-  .task-list h3 {
-    color: var(--glass-contrast);
-    margin-bottom: 12px;
-    font-size:20px;
-    position:relative;
-  }
-  
-  /* labels list style */
-  .task-list label{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    margin: 8px 0;
-    color: var(--muted-text);
-    font-weight:500;
-  }
-  .task-list input[type="checkbox"]{
-    width:18px;
-    height:18px;
-    border-radius:4px;
-    accent-color: var(--highlight); /* modern browsers */
-  }
-  
-  /* Make the leftmost card darker variant matching second image's deep blue column */
-  .task-list.card--dark {
-    background: linear-gradient(180deg, var(--accent-blue), var(--accent-deep));
-    color: #fff;
-    padding: 26px;
-  }
-  .task-list.card--dark label{
-    color: rgba(255,255,255,0.9);
-  }
-  
-  /* when the TaskList is used as 'large' card (first) emulate the second image tall card */
-  .task-list:first-of-type{
-    border-radius: 12px;
-    padding: 24px;
-  }
-  
+.tasklist-container {
+  background: #f8faff;
+  border: 2px solid #dce3ea;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+}
+
+.tasklist-container.dark {
+  background: #16304a;
+  color: #fff;
+}
+
+.tasklist-container.gray {
+  background: #dfe6ee;
+}
+
+.tasklist-title {
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 12px;
+  border: 2px solid #dce3ea;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.task-item:hover {
+  background: #eef2f7;
+}
+
+.task-item.selected {
+  border-color: #16304a;
+  background: #e6f0ff;
+}
+
+.task-title-text {
+  flex: 1;
+  margin-left: 12px;
+  color: #1d1d1d;
+  font-weight: 500;
+}
+
+.deadline {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1d4160;
+}
+
+.task-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-icon,
+.delete-icon {
+  cursor: pointer;
+  font-size: 15px;
+  transition: .2s;
+}
+
+.edit-icon:hover {
+  color: #1d4160;
+}
+
+.delete-icon:hover {
+  color: red;
+}
+
+/* Checkbox */
+.task-item input[type="checkbox"] {
+  transform: scale(1.3);
+  cursor: pointer;
+}

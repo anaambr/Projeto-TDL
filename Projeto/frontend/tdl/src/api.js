@@ -1,78 +1,101 @@
 const API_URL = "http://localhost:8000";
 
-async function request(path, options = {}) {
-  const { method = "GET", body, token } = options;
-
-  const headers = {
-    "Content-Type": "application/json",
-  };
-
-  if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
-  }
-
-  const res = await fetch(`${API_URL}${path}`, {
-    method,
-    headers,
-    body: body ? JSON.stringify(body) : undefined,
-  });
-
-  let data = {};
+// ------------------- HELPER -------------------
+async function handleResponse(res) {
+  let data = null;
   try {
     data = await res.json();
-  } catch (err) {
-    data = {};
+  } catch (e) {
+    data = null;
   }
 
   if (!res.ok) {
-    throw new Error(
-      data.detail || data.message || "Erro ao comunicar com o servidor"
-    );
+    throw new Error(data?.detail || "Erro no servidor");
   }
 
   return data;
 }
 
-export function apiRegister(name, email, password) {
-  return request("/register", {
+// ------------------- AUTH -------------------
+
+export async function apiLogin(email, password) {
+  const res = await fetch(`${API_URL}/login`, {
     method: "POST",
-    body: { name, email, password },
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
   });
+
+  return handleResponse(res);
 }
 
-export function apiLogin(email, password) {
-  return request("/login", {
+export async function apiRegister(name, email, password) {
+  const res = await fetch(`${API_URL}/register`, {
     method: "POST",
-    body: { email, password },
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, password }),
   });
+
+  return handleResponse(res);
 }
 
-export function apiGetTasks(token) {
-  return request("/tasks", {
-    method: "GET",
-    token,
+// ------------------- TASKS -------------------
+
+export async function apiGetTasks(token, search = "") {
+  const params = new URLSearchParams();
+  if (search.trim()) params.append("search", search.trim());
+
+  const res = await fetch(`${API_URL}/tasks?${params.toString()}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
+
+  return handleResponse(res);
 }
 
-export function apiCreateTask(token, { title, description }) {
-  return request("/tasks", {
+export async function apiCreateTask(token, data) {
+  const res = await fetch(`${API_URL}/tasks`, {
     method: "POST",
-    token,
-    body: { title, description },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
   });
+
+  return handleResponse(res);
 }
 
-export function apiUpdateTask(token, id, updates) {
-  return request(`/tasks/${id}`, {
+export async function apiGetTaskById(token, id) {
+  const res = await fetch(`${API_URL}/tasks/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return handleResponse(res);
+}
+
+export async function apiUpdateTask(token, id, data) {
+  const res = await fetch(`${API_URL}/tasks/${id}`, {
     method: "PUT",
-    token,
-    body: updates,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
   });
+
+  return handleResponse(res);
 }
 
-export function apiDeleteTask(token, id) {
-  return request(`/tasks/${id}`, {
+export async function apiDeleteTask(token, id) {
+  const res = await fetch(`${API_URL}/tasks/${id}`, {
     method: "DELETE",
-    token,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
+
+  return handleResponse(res);
 }

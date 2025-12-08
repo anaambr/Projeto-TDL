@@ -1,6 +1,5 @@
 import React from "react";
-import "./Sidebar.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   FaUser,
   FaComments,
@@ -9,96 +8,63 @@ import {
   FaCog,
   FaSignOutAlt,
 } from "react-icons/fa";
+import "./Sidebar.css";
 
-const Sidebar = ({ user, onLogout }) => {
-  const displayName = user?.name || "Usuário";
-  const username = user?.email || "@user";
+export default function Sidebar({ user }) {
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+    navigate("/login");
+  }
 
   return (
     <aside className="sidebar">
-      {/* Usuário */}
-      <div className="user">
+      <div className="user-section">
         <div className="avatar"></div>
-        <p>
-          {username}
-          <br />
-          <small>{displayName}</small>
-        </p>
+        <div className="user-info">
+          <strong>@{user?.username || "user"}</strong>
+          <small>{user?.email || "Usuário"}</small>
+        </div>
       </div>
 
-      {/* Navegação */}
-      <nav>
+      <nav className="menu">
         <ul>
-          {/* PERFIL */}
           <li>
-            <NavLink
-              to="/profile"
-              className={({ isActive }) =>
-                isActive ? "active-link" : ""
-              }
-            >
+            <NavLink to="/profile">
               <FaUser /> Perfil
             </NavLink>
           </li>
 
-          {/* BATE-PAPO */}
           <li>
-            <NavLink
-              to="/chat"
-              className={({ isActive }) =>
-                isActive ? "active-link" : ""
-              }
-            >
+            <NavLink to="/chat">
               <FaComments /> Bate-papo
             </NavLink>
           </li>
 
-          {/* ITENS SALVOS */}
           <li>
-            <NavLink
-              to="/saved"
-              className={({ isActive }) =>
-                isActive ? "active-link" : ""
-              }
-            >
+            <NavLink to="/saved">
               <FaBookmark /> Itens salvos
             </NavLink>
           </li>
 
-          {/* CONQUISTAS */}
           <li>
-            <NavLink
-              to="/achievements"
-              className={({ isActive }) =>
-                isActive ? "active-link" : ""
-              }
-            >
+            <NavLink to="/achievements">
               <FaBullseye /> Conquistas
             </NavLink>
           </li>
         </ul>
       </nav>
 
-      {/* Rodapé */}
-      <div className="bottom">
-        <li>
-          <NavLink
-            to="/settings"
-            className={({ isActive }) =>
-              isActive ? "active-link" : ""
-            }
-          >
-            <FaCog /> Configurações
-          </NavLink>
-        </li>
+      <div className="sidebar-bottom">
+        <NavLink to="/settings" className="settings-link">
+          <FaCog /> Configurações
+        </NavLink>
 
-        {/* SAIR */}
-        <li className="logout" onClick={onLogout}>
+        <button className="logout-btn" onClick={handleLogout}>
           <FaSignOutAlt /> Sair
-        </li>
+        </button>
       </div>
     </aside>
   );
-};
-
-export default Sidebar;
+}

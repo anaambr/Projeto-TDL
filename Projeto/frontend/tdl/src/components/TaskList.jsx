@@ -1,71 +1,77 @@
 import React from "react";
 import "./TaskList.css";
 
-const TaskList = ({
+import { FaEdit, FaTrash } from "react-icons/fa";
+
+export default function TaskList({
   title,
-  gray,
-  dark,
   icon,
   tasks = [],
-  loading,
-  error,
+  selectedTask,
+  onSelect,
   onToggleStatus,
   onDelete,
-  onEdit,
-}) => {
-  const classNames = [
-    "task-list",
-    gray ? "gray" : "",
-    dark ? "card--dark" : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
-
+  variant = "dark",
+}) {
   return (
-    <section className={classNames}>
-      <h3>
-        {icon && <span className="icon">{icon}</span>}
-        {title}
+    <div className={`tasklist-container ${variant}`}>
+      <h3 className="tasklist-title">
+        {icon} {title}
       </h3>
+      <hr />
 
-      {loading && <p>Carregando...</p>}
-      {error && <p className="task-error">{error}</p>}
+      {tasks.length === 0 ? (
+        <p className="empty-text">Nenhuma tarefa.</p>
+      ) : (
+        tasks.map((task) => (
+          <div
+            key={task.id}
+            className={`task-item ${
+              selectedTask?.id === task.id ? "selected" : ""
+            }`}
+            onClick={() => onSelect(task)}
+          >
+            <input
+              type="checkbox"
+              checked={task.status === "concluida"}
+              onChange={(e) => {
+                e.stopPropagation();
+                onToggleStatus(task);
+              }}
+            />
 
-      <div className="task-items">
-        {tasks.map((task) => (
-          <div key={task.id} className="task-row">
-            <label>
-              <input
-                type="checkbox"
-                checked={task.status === "concluida"}
-                onChange={() => onToggleStatus(task)}
-              />
+            <span className="task-title-text">
               {task.title}
-            </label>
+              {task.days_left !== null && (
+                <span className="deadline">
+                  {task.days_left === 0
+                    ? " (vence hoje)"
+                    : task.days_left < 0
+                    ? ` (atrasada há ${Math.abs(task.days_left)} dias)`
+                    : ` (faltam ${task.days_left} dias)`}
+                </span>
+              )}
+            </span>
 
             <div className="task-actions">
-              <button
-                className="task-edit-btn"
-                onClick={() => onEdit(task)}
-              >
-                ✏️
-              </button>
-              <button
-                className="task-delete-btn"
-                onClick={() => onDelete(task)}
-              >
-                ❌
-              </button>
+              <FaEdit
+                className="edit-icon"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onSelect(task);
+                }}
+              />
+              <FaTrash
+                className="delete-icon"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDelete(task);
+                }}
+              />
             </div>
           </div>
-        ))}
-
-        {!loading && tasks.length === 0 && (
-          <p className="task-empty">Nenhuma tarefa encontrada.</p>
-        )}
-      </div>
-    </section>
+        ))
+      )}
+    </div>
   );
-};
-
-export default TaskList;
+}

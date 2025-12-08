@@ -19,203 +19,243 @@ import SavedItems from "./components/SavedItems";
 import Chat from "./components/Chat";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import AddTask from "./components/AddTask";
+import EditTask from "./components/EditTask";
 
 import {
   apiGetTasks,
-  apiCreateTask,
   apiUpdateTask,
   apiDeleteTask,
 } from "./api";
 
-import {
-  FaClipboardList,
-  FaLightbulb,
-  FaClock,
-  FaBullhorn,
-} from "react-icons/fa";
 import "./App.css";
+import { FaClipboardList, FaLightbulb, FaClock, FaBullhorn } from "react-icons/fa";
 
+
+// Rota protegida
 const ProtectedRoute = ({ token, children }) => {
   if (!token) return <Navigate to="/login" replace />;
   return children;
 };
 
-function App() {
-  const [auth, setAuth] = useState({
-    token: null,
-    user: null,
-  });
-
+export default function App() {
+  const [auth, setAuth] = useState({ token: null, user: null });
   const [tasks, setTasks] = useState([]);
-  const [loadingTasks, setLoadingTasks] = useState(false);
-  const [tasksError, setTasksError] = useState("");
-  const [editingTask, setEditingTask] = useState(null);
+  const [search, setSearch] = useState("");
+  const [selectedTask, setSelectedTask] = useState(null);
 
+  // carregar token já salvo
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    const storedUser = localStorage.getItem("user");
-
-    if (storedToken && storedUser) {
-      setAuth({
-        token: storedToken,
-        user: JSON.parse(storedUser),
-      });
+    const t = localStorage.getItem("token");
+    const u = localStorage.getItem("user");
+    if (t && u) {
+      setAuth({ token: t, user: JSON.parse(u) });
     }
   }, []);
 
+  // carregar tarefas sempre que tiver token ou buscar
   useEffect(() => {
-    const fetchTasks = async () => {
-      if (!auth.token) return;
-      setLoadingTasks(true);
-      setTasksError("");
+    if (!auth.token) return;
 
+    let cancelled = false;
+
+    async function loadTasks() {
       try {
-        const data = await apiGetTasks(auth.token);
-        setTasks(data || []);
+        const data = await apiGetTasks(auth.token, search);
+        if (!cancelled) setTasks(data);
       } catch (err) {
-        setTasksError(err.message || "Erro ao carregar tarefas");
-      } finally {
-        setLoadingTasks(false);
+        console.error(err);
+        if (!cancelled) setTasks([]);
       }
+    }
+
+    loadTasks();
+    return () => {
+      cancelled = true;
     };
+  }, [auth.token, search]);
 
-    fetchTasks();
-  }, [auth.token]);
-
+  // login
   const handleLogin = (data) => {
     localStorage.setItem("token", data.token);
     localStorage.setItem("user", JSON.stringify(data.user));
-
-    setAuth({
-      token: data.token,
-      user: data.user,
-    });
+    setAuth({ token: data.token, user: data.user });
   };
 
+  // logout
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    localStorage.clear();
     setAuth({ token: null, user: null });
     setTasks([]);
+    setSelectedTask(null);
   };
 
-  const handleCreateTask = async (title, description) => {
-    try {
-      const data = await apiCreateTask(auth.token, { title, description });
-      setTasks((prev) => [...prev, data.task]);
-    } catch (err) {
-      alert(err.message);
+  // quando AddTask cria tarefa => só adiciona na lista
+  const handleCreateTask = (task) => {
+    setTasks((prev) => [...prev, task]);
+  };
+
+  // quando EditTask retorna tarefa atualizada
+  const handleUpdateTaskLocal = (updatedTask) => {
+    setTasks((prev) => prev.map((t) => (t.id === updatedTask.id ? updatedTask : t)));
+    if (selectedTask && selectedTask.id === updatedTask.id) {
+      setSelectedTask(updatedTask);
     }
   };
 
-  const handleUpdateTask = async (id, updates) => {
-    try {
-      const data = await apiUpdateTask(auth.token, id, updates);
-      setTasks((prev) =>
-        prev.map((task) => (task.id === id ? data.task : task))
-      );
-      setEditingTask(null);
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
-  const handleToggleStatus = async (task) => {
+  // alternar status concluída/pendente a partir de TaskList
+  const toggleTaskStatus = async (task) => {
     const newStatus = task.status === "concluida" ? "pendente" : "concluida";
-    handleUpdateTask(task.id, { status: newStatus });
+    try {
+      const res = await apiUpdateTask(auth.token, task.id, { status: newStatus });
+      handleUpdateTaskLocal(res.task);
+    } catch (err) {
+      alert("Erro ao atualizar status: " + err.message);
+    }
   };
 
+  // deletar
   const handleDeleteTask = async (task) => {
-    if (!window.confirm("Excluir esta tarefa?")) return;
-
     try {
       await apiDeleteTask(auth.token, task.id);
       setTasks((prev) => prev.filter((t) => t.id !== task.id));
+      if (selectedTask?.id === task.id) setSelectedTask(null);
     } catch (err) {
-      alert(err.message);
+      alert("Erro ao deletar: " + err.message);
     }
   };
 
-  const pendingTasks = tasks.filter((t) => t.status !== "concluida");
-  const priorityTasks = pendingTasks.slice(0, 4);
+  const pending = tasks.filter((t) => t.status !== "concluida");
+  const priority = pending.filter((t) => t.priority !== "normal");
 
   return (
     <Router>
       <div className="container">
+
         {auth.token && (
           <Sidebar user={auth.user} onLogout={handleLogout} />
         )}
 
         <main className="main">
-          {auth.token && (
-            <header className="top-bar glass">
-              <input type="text" placeholder="Pesquisar tarefa..." />
-              <span className="bell">🔔</span>
-            </header>
-          )}
-
           <Routes>
-            <Route path="/login" element={<Login onLogin={handleLogin} />} />
-            <Route path="/register" element={<Register />} />
+            {/* LOGIN */}
+            <Route
+              path="/login"
+              element={
+                auth.token ? (
+                  <Navigate to="/" replace />
+                ) : (
+                  <Login onLogin={handleLogin} />
+                )
+              }
+            />
 
+            {/* REGISTER */}
+            <Route
+              path="/register"
+              element={
+                auth.token ? (
+                  <Navigate to="/" replace />
+                ) : (
+                  <Register />
+                )
+              }
+            />
+
+            {/* DASHBOARD */}
             <Route
               path="/"
               element={
                 <ProtectedRoute token={auth.token}>
-                  <div className="dashboard-grid">
-                    <TaskList
-                      title="Tarefas"
-                      icon={<FaClipboardList />}
-                      dark
-                      tasks={tasks}
-                      loading={loadingTasks}
-                      error={tasksError}
-                      onToggleStatus={handleToggleStatus}
-                      onDelete={handleDeleteTask}
-                      onEdit={(task) => setEditingTask(task)}
-                    />
+                  <>
+                    <header className="top-bar">
+                      <div className="top-bar-pill">🔔</div>
+                      <input
+                        type="text"
+                        placeholder="Pesquisar tarefa..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </header>
 
-                    <div className="mid-column">
+                    <div className="dashboard-grid">
+                      {/* Coluna 1 - Tarefas */}
                       <TaskList
-                        title="Prioridade"
-                        icon={<FaLightbulb />}
-                        gray
-                        tasks={priorityTasks}
-                        loading={loadingTasks}
-                        error={tasksError}
-                        onToggleStatus={handleToggleStatus}
+                        title="Tarefas"
+                        icon={<FaClipboardList />}
+                        variant="dark"
+                        tasks={tasks}
+                        selectedTask={selectedTask}
+                        onSelect={setSelectedTask}
+                        onToggleStatus={toggleTaskStatus}
                         onDelete={handleDeleteTask}
-                        onEdit={(task) => setEditingTask(task)}
                       />
 
-                      <TaskList
-                        title="Pendentes"
-                        icon={<FaClock />}
-                        gray
-                        tasks={pendingTasks}
-                        loading={loadingTasks}
-                        error={tasksError}
-                        onToggleStatus={handleToggleStatus}
-                        onDelete={handleDeleteTask}
-                        onEdit={(task) => setEditingTask(task)}
-                      />
+                      {/* Coluna 2 - Prioridade / Pendentes / Operações */}
+                      <div className="mid-column">
+                        <TaskList
+                          title="Prioridade"
+                          icon={<FaLightbulb />}
+                          variant="gray"
+                          tasks={priority}
+                          selectedTask={selectedTask}
+                          onSelect={setSelectedTask}
+                          onToggleStatus={toggleTaskStatus}
+                          onDelete={handleDeleteTask}
+                        />
 
-                      <Operations
-                        onCreateTask={handleCreateTask}
-                        onUpdateTask={handleUpdateTask}
-                        editingTask={editingTask}
-                      />
+                        <TaskList
+                          title="Pendentes"
+                          icon={<FaClock />}
+                          variant="gray"
+                          tasks={pending}
+                          selectedTask={selectedTask}
+                          onSelect={setSelectedTask}
+                          onToggleStatus={toggleTaskStatus}
+                          onDelete={handleDeleteTask}
+                        />
+
+                        <Operations selectedTask={selectedTask} />
+                      </div>
+
+                      {/* Coluna 3 - Calendário / Esta semana */}
+                      <div className="right-column">
+                        <Calendar />
+                        <WeeklyTasks icon={<FaBullhorn />} />
+                      </div>
                     </div>
-
-                    <div className="right-column">
-                      <Calendar />
-                      <WeeklyTasks icon={<FaBullhorn />} />
-                    </div>
-                  </div>
+                  </>
                 </ProtectedRoute>
               }
             />
 
+            {/* ADD TASK */}
+            <Route
+              path="/add-task"
+              element={
+                <ProtectedRoute token={auth.token}>
+                  <AddTask
+                    token={auth.token}
+                    onCreateTask={handleCreateTask}
+                  />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* EDIT TASK */}
+            <Route
+              path="/edit-task/:id"
+              element={
+                <ProtectedRoute token={auth.token}>
+                  <EditTask
+                    token={auth.token}
+                    onUpdateTask={handleUpdateTaskLocal}
+                  />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* OUTRAS PÁGINAS */}
             <Route
               path="/profile"
               element={
@@ -224,7 +264,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/chat"
               element={
@@ -233,7 +272,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/saved"
               element={
@@ -242,7 +280,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/achievements"
               element={
@@ -251,7 +288,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/settings"
               element={
@@ -260,13 +296,9 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
-            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
       </div>
     </Router>
   );
 }
-
-export default App;

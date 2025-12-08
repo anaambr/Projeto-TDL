@@ -1,42 +1,54 @@
-/* Settings.css */
-.settings-page {
-  padding: 18px;
-  border-radius: 12px;
-  background: #ffffff;
-  box-shadow: 0 6px 18px rgba(21,32,43,0.06);
-  max-width: 760px;
-  margin: 0 auto;
+.settings-card {
+  background: #f8faff;
+  padding: 32px;
+  border-radius: 18px;
+  border: 2px solid #dce3ea;
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  box-shadow: 0px 6px 18px rgba(0,0,0,0.08);
 }
 
-.card--dark.settings-page {
-  background: #091022;
-  color: #dbeafe;
-  box-shadow: 0 6px 18px rgba(2,6,23,0.6);
-}
-
-.settings-page h2 {
-  margin: 0 0 12px;
-  font-size: 20px;
+.settings-card h2 {
+  font-size: 24px;
+  margin-bottom: 18px;
+  color: #16304a;
+  font-weight: 700;
 }
 
 .setting-item {
+  background: #fff;
+  border: 2px solid #dce3ea;
+  padding: 14px 18px;
+  border-radius: 14px;
+  margin-bottom: 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 12px;
-  border-radius: 10px;
-  margin: 10px 0;
-  background: linear-gradient(180deg,#fafafa,#f3f6fb);
 }
 
-.card--dark .setting-item {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.03);
-}
-
-.setting-item label {
+.switch-label {
+  font-size: 16px;
+  color: #1e1e1e;
+  width: 100%;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  font-size: 14px;
+}
+
+.switch-label input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+/* RESPONSIVO */
+@media (max-width: 600px) {
+  .settings-card {
+    padding: 24px;
+  }
+
+  .setting-item {
+    padding: 12px 14px;
+  }
 }

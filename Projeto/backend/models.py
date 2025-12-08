@@ -1,5 +1,7 @@
 from typing import Optional, List
+from datetime import date
 from sqlmodel import SQLModel, Field, Relationship
+
 
 class User(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -12,9 +14,14 @@ class User(SQLModel, table=True):
 
 class Task(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
+
     title: str
     description: Optional[str] = None
-    status: str = "pendente"
+
+    status: str = "pendente"  # pendente / concluida
+    priority: str = "normal"  # normal / alta / urgente
+
+    due_date: Optional[date] = None
 
     user_id: int = Field(foreign_key="user.id")
     user: Optional[User] = Relationship(back_populates="tasks")

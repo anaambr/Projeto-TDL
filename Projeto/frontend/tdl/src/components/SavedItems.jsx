@@ -1,22 +1,23 @@
 import React from "react";
 import "./SavedItems.css";
 
-const SavedItems = () => {
-  const saved = ["Lembrar de estudar", "Comprar itens", "Meta semanal"];
+export default function SavedItems() {
+  const saved = [
+    "Lembrar de estudar",
+    "Comprar itens para o projeto",
+    "Meta semanal"
+  ];
 
   return (
-    <section className="saved-page ">
-      <h2>Itens Salvos</h2>
-
-      <ul className="saved-list">
-        {saved.map((s, i) => (
-          <li key={i} className="saved-card">
-            ⭐ {s}
-          </li>
+    <div className="saved-container">
+      <h2 className="saved-title">Itens Salvos</h2>
+      <div className="saved-list">
+        {saved.map((item, i) => (
+          <div className="saved-item" key={i}>
+            ⭐ {item}
+          </div>
         ))}
-      </ul>
-    </section>
+      </div>
+    </div>
   );
-};
-
-export default SavedItems;
+}

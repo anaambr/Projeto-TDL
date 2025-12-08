@@ -1,320 +1,88 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-:root {
-  --bg: linear-gradient(145deg, #dbe4f0 0%, #eef3f8 100%);
-  --glass-bg: rgba(255, 255, 255, 0.25);
-  --glass-border: rgba(255, 255, 255, 0.35);
-  --accent-blue: #1d3557;
-  --accent-deep: #0f2235;
-  --highlight: #6c63ff;
-  --text: #0f2b3a;
-  --muted-text: #5b6b76;
-  --radius: 18px;
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-}
-
-* {
-  box-sizing: border-box;
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
-  transition: all 0.25s ease;
-}
-
-body, html, #root {
-  height: 100%;
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-}
-
-/* ===== Layout ===== */
+/* CONTAINER GERAL */
 .container {
   display: flex;
   min-height: 100vh;
+  background: #e6ebf2;
 }
 
+/* ÁREA PRINCIPAL */
 .main {
   flex: 1;
-  padding: 40px 44px;
-  display: flex;
-  flex-direction: column;
+  margin-left: 240px;   /* largura da sidebar */
+  padding: 30px 34px;
 }
 
+/* BARRA SUPERIOR */
 .top-bar {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 32px;
+  justify-content: space-between;
+  background: #16304a;
+  padding: 12px 18px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  color: white;
 }
+
 .top-bar input {
-  flex: 1;
-  height: 46px;
-  border-radius: 999px;
-  border: 1px solid var(--glass-border);
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(18px);
-  box-shadow: var(--shadow);
-  color: var(--text);
-  padding: 0 20px;
+  width: 260px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: #ffffff;
+  color: #000;
+  font-weight: 500;
 }
-.top-bar .bell {
-  background: rgba(255, 255, 255, 0.25);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(18px);
-  padding: 10px 12px;
+
+.top-bar-pill {
+  background: #ffffff;
+  color: #16304a;
+  padding: 8px 12px;
   border-radius: 12px;
-  cursor: pointer;
-  box-shadow: var(--shadow);
+  font-size: 18px;
 }
-/* ===== NOVO GRID ===== */
+
+/* GRID DO DASHBOARD */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
+  grid-template-columns: 1.15fr 1fr 1fr;
   gap: 28px;
-  align-items: stretch; /* Garante alturas iguais entre as colunas */
 }
 
-/* COLUNA 2 — Prioridade, Pendentes e Operações */
-.mid-column {
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr; /* três blocos iguais */
-  gap: 22px;
-}
-
-/* COLUNA 3 — Calendário e Esta Semana */
+/* COLUNAS DO MEIO E DIREITA */
+.mid-column,
 .right-column {
-  display: grid;
-  grid-template-rows: 1.5fr 1.5fr; /* dois blocos proporcionais para igualar à altura total da coluna 2 */
-  gap: 22px;
-}
-
-/* CARD DE TAREFAS (coluna 1) */
-.tarefas-card {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  height: 100%;
-  min-height: 100%;
+  gap: 22px;
 }
 
-/* Garante que todas as colunas fiquem niveladas verticalmente */
-.dashboard-grid > * {
-  height: 100%;
-}
-
-/* Garante que os cards dentro das colunas ocupem toda a altura possível */
-.mid-column > section,
-.right-column > section {
-  height: 100%;
-}
-/* Card base glassmorphism */
-section {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(25px);
-  box-shadow: var(--shadow);
-  border-radius: var(--radius);
-  padding: 26px;
-}
-section:hover {
-  transform: translateY(-3px);
-}
-
-/* Tarefas maior e mais alta */
-.tarefas-card {
-  min-height: 500px;
-}
-
-/* Dark variant */
-.card--dark {
-  background: linear-gradient(180deg, var(--accent-deep), var(--accent-blue));
-  color: #fff;
-  box-shadow: 0 10px 25px rgba(15, 25, 40, 0.3);
-}
-
-/* Headings e ícones */
-h3 {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 600;
-  font-size: 18px;
-  margin: 0 0 16px;
-}
-.icon {
-  font-size: 16px;
-  opacity: 0.9;
-}
-
-/* Checkbox moderno */
-input[type="checkbox"] {
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border: 2px solid var(--highlight);
-  border-radius: 6px;
-  background: transparent;
-  cursor: pointer;
-  position: relative;
-}
-input[type="checkbox"]:checked {
-  background: var(--highlight);
-}
-input[type="checkbox"]:checked::after {
-  content: "✓";
-  position: absolute;
-  color: white;
-  font-size: 13px;
-  left: 3px;
-  top: -1px;
-}
-
-/* Labels */
-.task-items label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 8px 0;
-  font-size: 15px;
-  color: var(--muted-text);
-}
-.card--dark .task-items label {
-  color: rgba(255, 255, 255, 0.9);
-}
-
-/* Botões */
-button {
-  border: none;
-  padding: 12px 16px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--highlight), #5a50fa);
-  color: #fff;
-  font-weight: 600;
-  box-shadow: var(--shadow);
-  cursor: pointer;
-}
-button:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.1);
-}
-
-/* ===== SOMBRAS E ANIMAÇÕES SUAVES ===== */
-
-/* Cards padrão */
-section {
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-}
-
-/* Hover com leve elevação */
-section:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-}
-
-/* Animação de entrada suave (fade + slide) */
-@keyframes fadeSlideIn {
-  0% {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Aplica a animação de entrada aos cards */
-section {
-  animation: fadeSlideIn 0.5s ease both;
-}
-
-/* Pequeno delay alternado para efeito “em cascata” */
-.dashboard-grid section:nth-child(1) { animation-delay: 0.05s; }
-.dashboard-grid section:nth-child(2) { animation-delay: 0.1s; }
-.dashboard-grid section:nth-child(3) { animation-delay: 0.15s; }
-.dashboard-grid section:nth-child(4) { animation-delay: 0.2s; }
-.dashboard-grid section:nth-child(5) { animation-delay: 0.25s; }
-.dashboard-grid section:nth-child(6) { animation-delay: 0.3s; }
-
-
-/* ===== Responsividade ===== */
-
-/* Telas grandes (padrão desktop) já estão bem ajustadas */
-
-/* Telas médias (tablets) */
-@media (max-width: 1024px) {
+/* RESPONSIVIDADE */
+@media (max-width: 1300px) {
   .dashboard-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-
-  .tarefas-card {
-    min-height: 400px;
-  }
-
-  .mid-column,
-  .right-column {
-    gap: 18px;
-  }
-
-  .main {
-    padding: 30px;
-  }
-
-  section {
-    padding: 22px;
   }
 }
 
-/* Telas pequenas (celulares) */
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
-
+@media (max-width: 950px) {
   .main {
-    padding: 20px;
+    margin-left: 200px;
   }
+}
 
-  .top-bar {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-  }
-
+@media (max-width: 760px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
 
-  .tarefas-card {
-    min-height: auto;
-  }
-
-  section {
+  .main {
+    margin-left: 0;
     padding: 20px;
-  }
-
-  .bell {
-    align-self: flex-end;
   }
 }
 
-/* Telas muito pequenas */
-@media (max-width: 480px) {
-  h3 {
-    font-size: 16px;
-  }
-
-  button {
-    padding: 10px 14px;
-    font-size: 14px;
-  }
-
+@media (max-width: 550px) {
   .top-bar input {
-    height: 40px;
-  }
-
-  section {
-    padding: 18px;
+    width: 160px;
   }
 }

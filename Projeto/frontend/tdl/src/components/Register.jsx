@@ -3,88 +3,71 @@ import { useNavigate, Link } from "react-router-dom";
 import { apiRegister } from "../api";
 import "./Register.css";
 
-const Register = () => {
+export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const [erro, setErro] = useState("");
-  const [okMsg, setOkMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
-    setErro("");
-    setOkMsg("");
+    setLoading(true);
 
     try {
-      // 🔥 Envio correto para o backend
       await apiRegister(name, email, password);
-
-      setOkMsg("Cadastro realizado com sucesso! Redirecionando...");
-      
-      // Redireciona para login após 1 segundo
-      setTimeout(() => {
-        navigate("/login");
-      }, 1000);
-      
+      alert("Conta criada com sucesso!");
+      navigate("/login");
     } catch (err) {
-      setErro(err.message || "Erro ao registrar");
+      alert("Erro ao registrar: " + err.message);
     }
-  };
+
+    setLoading(false);
+  }
 
   return (
-    <section className="auth-page">
-      <div className="auth-card glass">
-        <h2>Criar Conta</h2>
+    <div className="auth-container">
 
-        {erro && <p className="auth-error">{erro}</p>}
-        {okMsg && <p className="auth-success">{okMsg}</p>}
+      <form className="auth-card" onSubmit={handleSubmit}>
+        <h2>Registrar</h2>
 
-        <form onSubmit={handleSubmit} className="auth-form">
-          <label>
-            Nome
-            <input
-              type="text"
-              value={name}
-              placeholder="Seu nome"
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </label>
+        <label>Nome</label>
+        <input 
+          type="text"
+          placeholder="Seu nome"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
 
-          <label>
-            Email
-            <input
-              type="email"
-              value={email}
-              placeholder="email@exemplo.com"
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </label>
+        <label>Email</label>
+        <input 
+          type="email"
+          placeholder="Digite seu email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
 
-          <label>
-            Senha
-            <input
-              type="password"
-              value={password}
-              placeholder="Digite sua senha"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </label>
+        <label>Senha</label>
+        <input 
+          type="password"
+          placeholder="Crie uma senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
 
-          <button type="submit">Registrar</button>
-        </form>
+        <button className="btn-primary" type="submit" disabled={loading}>
+          {loading ? "Criando conta..." : "Registrar"}
+        </button>
 
-        <p className="auth-footer">
+        <p className="switch-text">
           Já tem conta? <Link to="/login">Entrar</Link>
         </p>
-      </div>
-    </section>
-  );
-};
+      </form>
 
-export default Register;
+    </div>
+  );
+}

@@ -1,60 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
 import "./Operations.css";
+import { FaPlus, FaEdit } from "react-icons/fa";
 
-const Operations = ({ onCreateTask, onUpdateTask, editingTask }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-
-  useEffect(() => {
-    if (editingTask) {
-      setTitle(editingTask.title);
-      setDescription(editingTask.description || "");
-    } else {
-      setTitle("");
-      setDescription("");
-    }
-  }, [editingTask]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!title.trim()) return;
-
-    if (editingTask) {
-      onUpdateTask(editingTask.id, { title, description });
-    } else {
-      onCreateTask(title, description);
-    }
-
-    setTitle("");
-    setDescription("");
-  };
+export default function Operations({ selectedTask }) {
+  const navigate = useNavigate();
 
   return (
-    <section className="operations gray">
-      <h3>{editingTask ? "Editar Tarefa" : "Nova Tarefa"}</h3>
+    <div className="operations-box">
+      <h3 className="operations-title">Operações</h3>
+      <hr />
 
-      <form className="operations-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Título da tarefa"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
+      <div className="op-item" onClick={() => navigate("/add-task")}>
+        <FaPlus className="op-icon" />
+        <span>Adicionar tarefa</span>
+      </div>
 
-        <textarea
-          placeholder="Descrição (opcional)"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-
-        <button type="submit">
-          {editingTask ? "Salvar Alterações" : "Adicionar Tarefa"}
-        </button>
-      </form>
-    </section>
+      <div
+        className={`op-item ${!selectedTask ? "disabled" : ""}`}
+        onClick={() => selectedTask && navigate(`/edit-task/${selectedTask.id}`)}
+      >
+        <FaEdit className="op-icon" />
+        <span>Editar tarefa</span>
+      </div>
+    </div>
   );
-};
-
-export default Operations;
+}
