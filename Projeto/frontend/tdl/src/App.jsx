@@ -31,7 +31,6 @@ import {
 import "./App.css";
 import { FaClipboardList, FaLightbulb, FaClock, FaBullhorn } from "react-icons/fa";
 
-
 // Rota protegida
 const ProtectedRoute = ({ token, children }) => {
   if (!token) return <Navigate to="/login" replace />;
@@ -131,7 +130,6 @@ export default function App() {
   return (
     <Router>
       <div className="container">
-
         {auth.token && (
           <Sidebar user={auth.user} onLogout={handleLogout} />
         )}
@@ -169,7 +167,7 @@ export default function App() {
                 <ProtectedRoute token={auth.token}>
                   <>
                     <header className="top-bar">
-                      <div className="top-bar-pill">🔔</div>
+                      <div className="bell-pill">🔔</div>
                       <input
                         type="text"
                         placeholder="Pesquisar tarefa..."
@@ -221,7 +219,7 @@ export default function App() {
                       {/* Coluna 3 - Calendário / Esta semana */}
                       <div className="right-column">
                         <Calendar />
-                        <WeeklyTasks icon={<FaBullhorn />} />
+                        <WeeklyTasks />
                       </div>
                     </div>
                   </>
@@ -260,7 +258,7 @@ export default function App() {
               path="/profile"
               element={
                 <ProtectedRoute token={auth.token}>
-                  <Profile />
+                  <Profile user={auth.user} />
                 </ProtectedRoute>
               }
             />

@@ -1,88 +1,81 @@
-/* CONTAINER GERAL */
+/* ===========================
+   LAYOUT GERAL
+=========================== */
 .container {
   display: flex;
-  min-height: 100vh;
-  background: #e6ebf2;
+  width: 100%;
+  height: 100%;
 }
 
-/* ÁREA PRINCIPAL */
+/* ===========================
+   ÁREA PRINCIPAL
+=========================== */
 .main {
   flex: 1;
-  margin-left: 240px;   /* largura da sidebar */
-  padding: 30px 34px;
+  margin-left: 240px; /* espaço da sidebar */
+  padding: 20px 30px;
+  background: #e6edf5;
+  min-height: 100vh;
+  overflow-x: hidden; /* evita scroll lateral */
 }
 
-/* BARRA SUPERIOR */
+/* ===========================
+   BARRA SUPERIOR (busca)
+=========================== */
 .top-bar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   background: #16304a;
-  padding: 12px 18px;
+  padding: 14px;
   border-radius: 14px;
-  margin-bottom: 20px;
-  color: white;
+  margin-bottom: 24px;
+  width: 100%;      /* GARANTE QUE OCUPA A LARGURA CERTA */
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .top-bar input {
-  width: 260px;
-  padding: 10px;
-  border-radius: 10px;
+  flex: 1;
+  max-width: 800px;
+  padding: 12px 16px;
   border: none;
-  background: #ffffff;
-  color: #000;
-  font-weight: 500;
-}
-
-.top-bar-pill {
-  background: #ffffff;
-  color: #16304a;
-  padding: 8px 12px;
+  background: #f4f4f4;
   border-radius: 12px;
-  font-size: 18px;
+  font-size: 15px;
+  color: #000;
 }
 
-/* GRID DO DASHBOARD */
+.bell-pill {
+  background: #fff;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===========================
+   GRID PRINCIPAL
+=========================== */
 .dashboard-grid {
+  width: 100%;
+  max-width: 1400px;           /* TAMANHO IDEAL DA DASHBOARD */
+  margin: 0 auto;              /* CENTRALIZA O GRID NA TELA */
   display: grid;
-  grid-template-columns: 1.15fr 1fr 1fr;
-  gap: 28px;
+  grid-template-columns: 1.4fr 1fr 1.1fr;
+  gap: 22px;
+  align-items: flex-start;
 }
 
-/* COLUNAS DO MEIO E DIREITA */
+/* ===========================
+   COLUNAS
+=========================== */
 .mid-column,
 .right-column {
   display: flex;
   flex-direction: column;
-  gap: 22px;
-}
-
-/* RESPONSIVIDADE */
-@media (max-width: 1300px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (max-width: 950px) {
-  .main {
-    margin-left: 200px;
-  }
-}
-
-@media (max-width: 760px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .main {
-    margin-left: 0;
-    padding: 20px;
-  }
-}
-
-@media (max-width: 550px) {
-  .top-bar input {
-    width: 160px;
-  }
+  gap: 20px;
 }
