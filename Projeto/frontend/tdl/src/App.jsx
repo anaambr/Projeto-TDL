@@ -1,35 +1,25 @@
 import React, { useEffect, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 import Sidebar from "./components/Sidebar";
 import TaskList from "./components/TaskList";
 import Calendar from "./components/Calendar";
-import WeeklyTasks from "./components/WeeklyTasks";
 import Operations from "./components/Operations";
 
 import Achievements from "./components/Achievements";
 import Profile from "./components/Profile";
 import Settings from "./components/Settings";
-import SavedItems from "./components/SavedItems";
-import Chat from "./components/Chat";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import AddTask from "./components/AddTask";
 import EditTask from "./components/EditTask";
 
-import {
-  apiGetTasks,
-  apiUpdateTask,
-  apiDeleteTask,
-} from "./api";
+import { apiGetTasks, apiUpdateTask, apiDeleteTask } from "./api";
 
 import "./App.css";
-import { FaClipboardList, FaLightbulb, FaClock, FaBullhorn } from "react-icons/fa";
+import { FaClipboardList, FaLightbulb, FaClock } from "react-icons/fa";
 
 // Rota protegida
 const ProtectedRoute = ({ token, children }) => {
@@ -43,7 +33,6 @@ export default function App() {
   const [search, setSearch] = useState("");
   const [selectedTask, setSelectedTask] = useState(null);
 
-  // carregar token já salvo
   useEffect(() => {
     const t = localStorage.getItem("token");
     const u = localStorage.getItem("user");
@@ -52,7 +41,7 @@ export default function App() {
     }
   }, []);
 
-  // carregar tarefas sempre que tiver token ou buscar
+  // carregar tarefas
   useEffect(() => {
     if (!auth.token) return;
 
@@ -89,31 +78,32 @@ export default function App() {
     setSelectedTask(null);
   };
 
-  // quando AddTask cria tarefa => só adiciona na lista
   const handleCreateTask = (task) => {
     setTasks((prev) => [...prev, task]);
   };
 
-  // quando EditTask retorna tarefa atualizada
   const handleUpdateTaskLocal = (updatedTask) => {
     setTasks((prev) => prev.map((t) => (t.id === updatedTask.id ? updatedTask : t)));
-    if (selectedTask && selectedTask.id === updatedTask.id) {
+    if (selectedTask?.id === updatedTask.id) {
       setSelectedTask(updatedTask);
     }
   };
 
-  // alternar status concluída/pendente a partir de TaskList
   const toggleTaskStatus = async (task) => {
-    const newStatus = task.status === "concluida" ? "pendente" : "concluida";
-    try {
-      const res = await apiUpdateTask(auth.token, task.id, { status: newStatus });
-      handleUpdateTaskLocal(res.task);
-    } catch (err) {
-      alert("Erro ao atualizar status: " + err.message);
-    }
-  };
+  const newStatus = task.status === "concluida" ? "pendente" : "concluida";
 
-  // deletar
+  try {
+    const res = await apiUpdateTask(auth.token, task.id, { status: newStatus });
+    const updated = res.task || res;
+
+    handleUpdateTaskLocal(updated);
+
+  } catch (err) {
+    alert("Erro ao atualizar status: " + err.message);
+  }
+};
+
+
   const handleDeleteTask = async (task) => {
     try {
       await apiDeleteTask(auth.token, task.id);
@@ -124,15 +114,14 @@ export default function App() {
     }
   };
 
-  const pending = tasks.filter((t) => t.status !== "concluida");
+  const pending = tasks.filter((t) => t.status === "pendente");
+
   const priority = pending.filter((t) => t.priority !== "normal");
 
   return (
     <Router>
       <div className="container">
-        {auth.token && (
-          <Sidebar user={auth.user} onLogout={handleLogout} />
-        )}
+        {auth.token && <Sidebar user={auth.user} onLogout={handleLogout} />}
 
         <main className="main">
           <Routes>
@@ -140,11 +129,7 @@ export default function App() {
             <Route
               path="/login"
               element={
-                auth.token ? (
-                  <Navigate to="/" replace />
-                ) : (
-                  <Login onLogin={handleLogin} />
-                )
+                auth.token ? <Navigate to="/" replace /> : <Login onLogin={handleLogin} />
               }
             />
 
@@ -152,11 +137,7 @@ export default function App() {
             <Route
               path="/register"
               element={
-                auth.token ? (
-                  <Navigate to="/" replace />
-                ) : (
-                  <Register />
-                )
+                auth.token ? <Navigate to="/" replace /> : <Register />
               }
             />
 
@@ -167,7 +148,6 @@ export default function App() {
                 <ProtectedRoute token={auth.token}>
                   <>
                     <header className="top-bar">
-                      <div className="bell-pill">🔔</div>
                       <input
                         type="text"
                         placeholder="Pesquisar tarefa..."
@@ -177,7 +157,6 @@ export default function App() {
                     </header>
 
                     <div className="dashboard-grid">
-                      {/* Coluna 1 - Tarefas */}
                       <TaskList
                         title="Tarefas"
                         icon={<FaClipboardList />}
@@ -189,7 +168,7 @@ export default function App() {
                         onDelete={handleDeleteTask}
                       />
 
-                      {/* Coluna 2 - Prioridade / Pendentes / Operações */}
+                      {/* Coluna 2 */}
                       <div className="mid-column">
                         <TaskList
                           title="Prioridade"
@@ -213,13 +192,13 @@ export default function App() {
                           onDelete={handleDeleteTask}
                         />
 
-                        <Operations selectedTask={selectedTask} />
+                        
                       </div>
 
-                      {/* Coluna 3 - Calendário / Esta semana */}
+                      {/* Coluna 3 */}
                       <div className="right-column">
                         <Calendar />
-                        <WeeklyTasks />
+                        <Operations selectedTask={selectedTask} />
                       </div>
                     </div>
                   </>
@@ -232,10 +211,7 @@ export default function App() {
               path="/add-task"
               element={
                 <ProtectedRoute token={auth.token}>
-                  <AddTask
-                    token={auth.token}
-                    onCreateTask={handleCreateTask}
-                  />
+                  <AddTask token={auth.token} onCreateTask={handleCreateTask} />
                 </ProtectedRoute>
               }
             />
@@ -245,58 +221,19 @@ export default function App() {
               path="/edit-task/:id"
               element={
                 <ProtectedRoute token={auth.token}>
-                  <EditTask
-                    token={auth.token}
-                    onUpdateTask={handleUpdateTaskLocal}
-                  />
+                  <EditTask token={auth.token} onUpdateTask={handleUpdateTaskLocal} />
                 </ProtectedRoute>
               }
             />
 
             {/* OUTRAS PÁGINAS */}
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute token={auth.token}>
-                  <Profile user={auth.user} />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/chat"
-              element={
-                <ProtectedRoute token={auth.token}>
-                  <Chat />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/saved"
-              element={
-                <ProtectedRoute token={auth.token}>
-                  <SavedItems />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/achievements"
-              element={
-                <ProtectedRoute token={auth.token}>
-                  <Achievements />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/settings"
-              element={
-                <ProtectedRoute token={auth.token}>
-                  <Settings />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/profile" element={<ProtectedRoute token={auth.token}><Profile user={auth.user} /></ProtectedRoute>} />
+            <Route path="/achievements" element={<ProtectedRoute token={auth.token}><Achievements /></ProtectedRoute>} />
+            <Route path="/settings" element={<ProtectedRoute token={auth.token}><Settings /></ProtectedRoute>} />
           </Routes>
         </main>
       </div>
     </Router>
   );
+  
 }

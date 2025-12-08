@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { apiCreateTask } from "../api";
 import "./TaskPages.css";
 import "./AddEditTask.css";
+import { unlockAchievement } from "../utils/achievements";
 
 export default function AddTask({ token, onCreateTask }) {
   const navigate = useNavigate();
@@ -30,7 +31,11 @@ export default function AddTask({ token, onCreateTask }) {
       };
 
       const data = await apiCreateTask(token, payload);
+
       if (onCreateTask) onCreateTask(data.task);
+
+      // 🏆 CONQUISTA: PRIMEIRA TAREFA
+      unlockAchievement("Primeira tarefa concluída");
 
       navigate("/");
     } catch (err) {

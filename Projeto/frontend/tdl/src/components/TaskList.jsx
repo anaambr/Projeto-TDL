@@ -1,7 +1,7 @@
 import React from "react";
 import "./TaskList.css";
-
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash, FaCheck } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function TaskList({
   title,
@@ -13,6 +13,9 @@ export default function TaskList({
   onDelete,
   variant = "dark",
 }) {
+
+  const navigate = useNavigate();
+
   return (
     <div className={`tasklist-container ${variant}`}>
       <h3 className="tasklist-title">
@@ -26,41 +29,50 @@ export default function TaskList({
         tasks.map((task) => (
           <div
             key={task.id}
-            className={`task-item ${
-              selectedTask?.id === task.id ? "selected" : ""
-            }`}
+            className={`task-item ${selectedTask?.id === task.id ? "selected" : ""}`}
             onClick={() => onSelect(task)}
           >
-            <input
-              type="checkbox"
-              checked={task.status === "concluida"}
-              onChange={(e) => {
-                e.stopPropagation();
-                onToggleStatus(task);
-              }}
-            />
-
             <span className="task-title-text">
               {task.title}
-              {task.days_left !== null && (
-                <span className="deadline">
-                  {task.days_left === 0
-                    ? " (vence hoje)"
-                    : task.days_left < 0
-                    ? ` (atrasada há ${Math.abs(task.days_left)} dias)`
-                    : ` (faltam ${task.days_left} dias)`}
-                </span>
-              )}
+
+              <span className="deadline">
+                {task.status === "concluida"
+                  ? " (concluída)"
+                  : task.days_left === 0
+                  ? " (vence hoje)"
+                  : task.days_left < 0
+                  ? ` (atrasada há ${Math.abs(task.days_left)} dias)`
+                  : ` (faltam ${task.days_left} dias)`
+                }
+              </span>
             </span>
 
             <div className="task-actions">
+
+              {/* BOTÃO CONCLUIR */}
+              {task.status !== "concluida" && (
+                <button
+                  className="done-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onToggleStatus(task);
+                  }}
+                >
+                  <FaCheck />
+                </button>
+              )}
+
+              {/* EDITAR */}
               <FaEdit
                 className="edit-icon"
                 onClick={(e) => {
                   e.stopPropagation();
                   onSelect(task);
+                  navigate(`/edit-task/${task.id}`);
                 }}
               />
+
+              {/* EXCLUIR */}
               <FaTrash
                 className="delete-icon"
                 onClick={(e) => {

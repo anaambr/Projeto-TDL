@@ -1,47 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Settings.css";
 
-export default function Settings() {
+const Settings = () => {
   const [darkMode, setDarkMode] = useState(false);
-  const [notifications, setNotifications] = useState(true);
-  const [sounds, setSounds] = useState(false);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      setDarkMode(true);
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    const newValue = !darkMode;
+    setDarkMode(newValue);
+
+    if (newValue) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  };
 
   return (
-    <section className="settings-card">
-      <h2>Configurações</h2>
+    <section className="settings-page">
+      <h2 style={{ color: "white" }}>Configurações</h2>
+
 
       <div className="setting-item">
-        <label className="switch-label">
-          <span>Tema escuro</span>
-          <input
-            type="checkbox"
-            checked={darkMode}
-            onChange={() => setDarkMode(!darkMode)}
+        <label>
+          <input 
+            type="checkbox" 
+            checked={darkMode} 
+            onChange={toggleDarkMode}
           />
-        </label>
-      </div>
-
-      <div className="setting-item">
-        <label className="switch-label">
-          <span>Notificações</span>
-          <input
-            type="checkbox"
-            checked={notifications}
-            onChange={() => setNotifications(!notifications)}
-          />
-        </label>
-      </div>
-
-      <div className="setting-item">
-        <label className="switch-label">
-          <span>Sons do sistema</span>
-          <input
-            type="checkbox"
-            checked={sounds}
-            onChange={() => setSounds(!sounds)}
-          />
+          Tema escuro
         </label>
       </div>
     </section>
   );
-}
+};
+
+export default Settings;

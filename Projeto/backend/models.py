@@ -18,8 +18,8 @@ class Task(SQLModel, table=True):
     title: str
     description: Optional[str] = None
 
-    status: str = "pendente"  # pendente / concluida
-    priority: str = "normal"  # normal / alta / urgente
+    status: str = "pendente"
+    priority: str = "normal"
 
     due_date: Optional[date] = None
 

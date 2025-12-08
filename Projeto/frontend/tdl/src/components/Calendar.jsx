@@ -7,11 +7,14 @@ export default function Calendar() {
   const month = today.toLocaleString("pt-BR", { month: "short" }).toUpperCase();
   const year = today.getFullYear();
 
-  const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
+  const weekDays = ["S", "T", "Q", "Q", "S", "S", "D"];
 
-  // Gerar calendário do mês
   const firstDay = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
-  const totalDays = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+  const totalDays = new Date(
+    today.getFullYear(),
+    today.getMonth() + 1,
+    0
+  ).getDate();
 
   const weeks = [];
   let current = 1 - firstDay;

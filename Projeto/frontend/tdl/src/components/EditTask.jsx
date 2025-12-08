@@ -14,7 +14,7 @@ export default function EditTask({ token, onUpdateTask }) {
     title: "",
     description: "",
     priority: "normal",
-    due_date: "",
+    data_limite: "",
   });
 
   useEffect(() => {
@@ -22,11 +22,13 @@ export default function EditTask({ token, onUpdateTask }) {
       try {
         const data = await apiGetTaskById(token, id);
 
+        const task = data.task || data; // ← cobre os 2 formatos
+
         setForm({
-          title: data.title || "",
-          description: data.description || "",
-          priority: data.priority || "normal",
-          due_date: data.due_date || "",
+          title: task.title || "",
+          description: task.description || "",
+          priority: task.priority || "normal",
+          data_limite: task.data_limite || "",
         });
       } catch (err) {
         alert("Erro ao carregar tarefa: " + err.message);
@@ -48,12 +50,12 @@ export default function EditTask({ token, onUpdateTask }) {
         title: form.title,
         description: form.description,
         priority: form.priority,
-        due_date: form.due_date,
+        data_limite: form.data_limite,
       };
 
       const data = await apiUpdateTask(token, id, payload);
 
-      if (onUpdateTask) onUpdateTask(data.task);
+      if (onUpdateTask) onUpdateTask(data.task || data);
 
       navigate("/");
     } catch (err) {
@@ -94,7 +96,7 @@ export default function EditTask({ token, onUpdateTask }) {
             value={form.due_date}
             onChange={handleChange}
           />
-
+          
           <textarea
             name="description"
             placeholder="Descrição..."

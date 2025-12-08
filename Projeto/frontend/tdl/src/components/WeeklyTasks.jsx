@@ -3,6 +3,7 @@ import "./WeeklyTasks.css";
 import { FaBullhorn } from "react-icons/fa";
 
 export default function WeeklyTasks({ tasks = [] }) {
+
   return (
     <div className="weekly-container">
       <h3 className="weekly-title">

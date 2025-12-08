@@ -3,6 +3,7 @@ const API_URL = "http://localhost:8000";
 // ------------------- HELPER -------------------
 async function handleResponse(res) {
   let data = null;
+
   try {
     data = await res.json();
   } catch (e) {
@@ -25,7 +26,9 @@ export async function apiLogin(email, password) {
     body: JSON.stringify({ email, password }),
   });
 
-  return handleResponse(res);
+  // backend retorna: { message, token, user }
+  const data = await handleResponse(res);
+  return data;
 }
 
 export async function apiRegister(name, email, password) {
@@ -50,6 +53,7 @@ export async function apiGetTasks(token, search = "") {
     },
   });
 
+  // backend retorna: [ {task}, {task}... ]
   return handleResponse(res);
 }
 
@@ -63,7 +67,9 @@ export async function apiCreateTask(token, data) {
     body: JSON.stringify(data),
   });
 
-  return handleResponse(res);
+  // backend retorna: { message, task }
+  const payload = await handleResponse(res);
+  return payload.task; // <------ CORREÇÃO IMPORTANTE
 }
 
 export async function apiGetTaskById(token, id) {
@@ -73,6 +79,7 @@ export async function apiGetTaskById(token, id) {
     },
   });
 
+  // backend retorna: {task fields...}
   return handleResponse(res);
 }
 
@@ -86,7 +93,8 @@ export async function apiUpdateTask(token, id, data) {
     body: JSON.stringify(data),
   });
 
-  return handleResponse(res);
+  const payload = await handleResponse(res);
+  return payload.task; // <------ CORREÇÃO IMPORTANTE
 }
 
 export async function apiDeleteTask(token, id) {

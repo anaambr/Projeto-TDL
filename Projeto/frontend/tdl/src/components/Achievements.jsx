@@ -1,25 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Achievements.css";
 
+
 export default function Achievements() {
-  const achievements = [
-    "Primeira tarefa concluída",
-    "7 dias seguidos produtivos",
-    "Primeiro objetivo semanal concluído",
-    "Concluiu 10 tarefas no total"
-  ];
+  const [achievements, setAchievements] = useState([]);
+
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem("achievements")) || [];
+    setAchievements(stored);
+  }, []);
 
   return (
     <section className="achievements-card">
       <h2>Conquistas</h2>
 
-      <ul>
-        {achievements.map((item, index) => (
-          <li key={index} className="achievement-item">
-            🏅 {item}
-          </li>
-        ))}
-      </ul>
+      {achievements.length === 0 ? (
+        <p className="no-achievements">Nenhuma conquista desbloqueada ainda.</p>
+      ) : (
+        <ul>
+          {achievements.map((ach, index) => (
+            <li key={index} className="achievement-item">
+              🏅 {ach}
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
   );
 }
