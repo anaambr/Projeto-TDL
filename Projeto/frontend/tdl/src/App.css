@@ -1,400 +1,127 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg: linear-gradient(145deg, #dbe4f0 0%, #eef3f8 100%);
-  --glass-bg: rgba(255, 255, 255, 0.25);
-  --glass-border: rgba(255, 255, 255, 0.35);
-  --accent-blue: #899ab3;
-  --accent-deep: #c7c7c7;
-  --highlight: #6c63ff;
-  --text: #000000;
-  --muted-text: #5b6b76;
-  --radius: 18px;
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --blue-dark: #16304a;
+  --blue-dark-2: #17324f;
+  --blue-border: #294766;
+  --blue-soft: #edf0f4;
+  --gray-card: #d1d3d8;
+  --bg-body: #f5f6f8;
+  --text-main: #16304a;
 }
-:root.dark {
-  --bg: #0e141a;
-  --glass-bg: rgba(30, 35, 45, 0.35);
-  --glass-border: rgba(255, 255, 255, 0.05);
-  --accent-blue: #0b1a2b;
-  --accent-deep: #03101d;
-  --highlight: #6c63ff;
-  --text: #161616;
-  --muted-text: #000000;
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-:root.dark section {
-  background: rgba(25, 30, 38, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: var(--text);
-}
-
-:root.dark .top-bar input {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.15);
-  color: var(--text);
-}
-
-:root.dark button {
-  box-shadow: none;
-}
-   body.dark-mode {
-    background: #0c0c0c !important;
-    color: #fff !important;
-  }
-
-  body.dark-mode p,
-  body.dark-mode h1,
-  body.dark-mode h2,
-  body.dark-mode h3,
-  body.dark-mode h4,
-  body.dark-mode h5,
-  body.dark-mode h6,
-  body.dark-mode span,
-  body.dark-mode label {
-    color: #ffffff !important;
-  }
- 
-  body.dark-mode .card,
-  body.dark-mode .card--dark,
-  body.dark-mode .container,
-  body.dark-mode .box,
-  body.dark-mode .profile-page,
-  body.dark-mode .sidebar,
-  body.dark-mode .task-item,
-  body.dark-mode .task-card,
-  body.dark-mode .calendar,
-  body.dark-mode .weekly,
-  body.dark-mode .operations,
-  body.dark-mode .content,
-  body.dark-mode section {
-    background: #ffffff !important;
-    color: #fff !important;
-    border: 1px solid #2a2a2a !important;
-  }
-  
-  body.dark-mode input,
-  body.dark-mode select,
-  body.dark-mode textarea {
-    background: #1a1a1a !important;
-    color: #fff !important;
-    border: 1px solid #333 !important;
-  }
-
-  body.dark-mode button {
-    background: #1f1f1f !important;
-    color: #ffffff !important;
-    border: 1px solid #333 !important;
-  }
-  
-  body.dark-mode button:hover {
-    background: #2b2b2b !important;
-  }
- 
-  body.dark-mode .modal {
-    background: #121212 !important;
-  }
-  
-  body.dark-mode .modal-overlay {
-    background: rgba(0, 0, 0, 0.7) !important;
-  }
-
-  
 
 * {
   box-sizing: border-box;
   font-family: "Inter", system-ui, -apple-system, sans-serif;
-  transition: all 0.25s ease;
 }
 
-body, html, #root {
+/* ====== BASE ====== */
+
+html, body, #root {
   height: 100%;
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
 }
 
-.sidebar {
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 100vh; 
-  width: 240px; 
-  overflow: hidden; 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; 
-  padding-bottom: 20px;
-  z-index: 999; 
+body {
+  background: var(--bg-body);
+  color: var(--text-main);
 }
 
-.main {
-  margin-left: 240px !important;
-}
-
+/* container geral (sidebar + conteúdo) */
 .container {
   display: flex;
   min-height: 100vh;
 }
 
+/* o CSS visual da sidebar está em Sidebar.css,
+   aqui só garantimos o espaço dela */
 .main {
   flex: 1;
-  padding: 40px 44px;
-  display: flex;
-  flex-direction: column;
+  padding: 32px 40px;
+  background: var(--bg-body);
+  overflow-x: hidden;
 }
+
+/* ====== TOP BAR (barra de busca + sino) ====== */
 
 .top-bar {
   display: flex;
   align-items: center;
-  gap: 16px;
+  justify-content: center;
   margin-bottom: 32px;
 }
+
+.top-bar-inner {
+  width: 100%;
+  max-width: 960px;
+  height: 54px;
+  background: var(--blue-dark);
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  gap: 16px;
+}
+
+.top-bar-bell {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #fff;
+}
+
 .top-bar input {
   flex: 1;
-  height: 46px;
+  height: 38px;
   border-radius: 999px;
-  border: 1px solid var(--glass-border);
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(18px);
-  box-shadow: var(--shadow);
-  color: var(--text);
-  padding: 0 20px;
+  border: none;
+  padding: 0 18px;
+  background: #f0f0f0;
+  font-size: 14px;
+  color: #555;
+  outline: none;
 }
-.top-bar .bell {
-  background: rgba(255, 255, 255, 0.25);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(18px);
-  padding: 10px 12px;
-  border-radius: 12px;
-  cursor: pointer;
-  box-shadow: var(--shadow);
-}
+
+/* Ícone da lupa: posicionado à direita (usado por react-icons se quiser)
+   mas aqui só damos espaço no final da barra  */
+
+/* ====== DASHBOARD GRID ====== */
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: 28px;
-  align-items: stretch; 
+  grid-template-columns: 1.5fr 1.1fr 1.1fr;
+  gap: 24px;
 }
 
+/* coluna central (Prioridade / Pendentes) */
 .mid-column {
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr; 
-  gap: 22px;
+  grid-template-rows: 1fr 1fr;
+  gap: 18px;
 }
 
+/* coluna da direita (Calendário / Esta semana / Operações) */
 .right-column {
   display: grid;
-  grid-template-rows: 1.5fr 1.5fr; 
-  gap: 22px;
+  grid-template-rows: 1.1fr 0.9fr;
+  gap: 18px;
 }
 
+/* card principal de tarefas (azul) ocupa toda a altura */
 .tarefas-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  height: 100%;
-  min-height: 100%;
-}
-
-.dashboard-grid > * {
   height: 100%;
 }
 
-.mid-column > section,
-.right-column > section {
-  height: 100%;
-}
-
+/* removendo estilos antigos genéricos de <section> */
 section {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(25px);
-  box-shadow: var(--shadow);
-  border-radius: var(--radius);
-  padding: 26px;
-}
-section:hover {
-  transform: translateY(-3px);
-}
-
-.tarefas-card {
-  min-height: 500px;
-}
-
-.card--dark {
-  background: linear-gradient(180deg, var(--accent-deep), var(--accent-blue));
-  color: #fff;
-  box-shadow: 0 10px 25px rgba(15, 25, 40, 0.3);
-}
-
-h3 {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 600;
-  font-size: 18px;
-  margin: 0 0 16px;
-}
-.icon {
-  font-size: 16px;
-  opacity: 0.9;
-}
-
-input[type="checkbox"] {
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border: 2px solid var(--highlight);
-  border-radius: 6px;
-  background: transparent;
-  cursor: pointer;
-  position: relative;
-}
-input[type="checkbox"]:checked {
-  background: var(--highlight);
-}
-input[type="checkbox"]:checked::after {
-  content: "✓";
-  position: absolute;
-  color: white;
-  font-size: 13px;
-  left: 3px;
-  top: -1px;
-}
-
-.task-items label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 8px 0;
-  font-size: 15px;
-  color: var(--muted-text);
-}
-.card--dark .task-items label {
-  color: rgba(255, 255, 255, 0.9);
-}
-
-button {
+  padding: 0;
+  margin: 0;
   border: none;
-  padding: 12px 16px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--highlight), #5a50fa);
-  color: #fff;
-  font-weight: 600;
-  box-shadow: var(--shadow);
-  cursor: pointer;
-}
-button:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.1);
-}
-
-section {
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-}
-
-section:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-}
-
-@keyframes fadeSlideIn {
-  0% {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-section {
-  animation: fadeSlideIn 0.5s ease both;
-}
-
-.dashboard-grid section:nth-child(1) { animation-delay: 0.05s; }
-.dashboard-grid section:nth-child(2) { animation-delay: 0.1s; }
-.dashboard-grid section:nth-child(3) { animation-delay: 0.15s; }
-.dashboard-grid section:nth-child(4) { animation-delay: 0.2s; }
-.dashboard-grid section:nth-child(5) { animation-delay: 0.25s; }
-.dashboard-grid section:nth-child(6) { animation-delay: 0.3s; }
-
-@media (max-width: 1024px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-
-  .tarefas-card {
-    min-height: 400px;
-  }
-
-  .mid-column,
-  .right-column {
-    gap: 18px;
-  }
-
-  .main {
-    padding: 30px;
-  }
-
-  section {
-    padding: 22px;
-  }
-}
-
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
-
-  .main {
-    padding: 20px;
-  }
-
-  .top-bar {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-  }
-
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .tarefas-card {
-    min-height: auto;
-  }
-
-  section {
-    padding: 20px;
-  }
-
-  .bell {
-    align-self: flex-end;
-  }
-}
-
-@media (max-width: 480px) {
-  h3 {
-    font-size: 16px;
-  }
-
-  button {
-    padding: 10px 14px;
-    font-size: 14px;
-  }
-
-  .top-bar input {
-    height: 40px;
-  }
-
-  section {
-    padding: 18px;
-  }
+  background: transparent;
+  box-shadow: none;
 }

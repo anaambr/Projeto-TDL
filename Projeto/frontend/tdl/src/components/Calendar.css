@@ -1,65 +1,65 @@
 .calendar-container {
-  background: #f8faff;
-  padding: 22px;
+  background: #f8fbff;
   border-radius: 18px;
+  overflow: hidden;
   border: 2px solid #dce3ea;
-  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
 }
 
+/* cabeçalho azul */
+
 .calendar-header-box {
+  background: #4a627f;
+  color: #ffffff;
   display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin-bottom: 15px;
+  align-items: center;
+  padding: 10px 18px;
+  gap: 12px;
 }
 
 .calendar-day {
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 700;
-  color: #16304a;
 }
 
 .calendar-month {
-  font-size: 20px;
-  color: #1d1d1d;
+  font-size: 18px;
+  font-weight: 600;
   text-transform: uppercase;
 }
 
 .calendar-year {
-  font-size: 16px;
-  opacity: 0.7;
+  margin-left: auto;
+  font-size: 14px;
 }
+
+/* tabela */
 
 .calendar-table {
   width: 100%;
   border-collapse: collapse;
   text-align: center;
+  padding: 8px 0;
 }
 
 .calendar-table th {
-  padding-bottom: 8px;
-  font-size: 14px;
-  color: #16304a;
+  padding: 8px 0;
+  font-size: 12px;
+  color: #4a627f;
 }
 
 .calendar-table td {
-  padding: 8px 0;
-  font-size: 14px;
-  border-radius: 8px;
+  padding: 6px 0;
+  font-size: 13px;
 }
 
 .calendar-table td.filled:hover {
-  background: #e6ebf2;
+  background: #e6ebf5;
   cursor: pointer;
 }
 
 .calendar-table td.today {
   background: #16304a;
-  color: white;
-  font-weight: 700;
+  color: #ffffff;
   border-radius: 8px;
-}
-
-.calendar-table td.empty {
-  opacity: 0.3;
+  font-weight: 700;
 }

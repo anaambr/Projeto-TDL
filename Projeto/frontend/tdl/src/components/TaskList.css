@@ -1,19 +1,21 @@
 .tasklist-container {
-  background: #f8faff;
-  border: 2px solid #dce3ea;
   border-radius: 18px;
-  padding: 20px;
-  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+  padding: 20px 22px;
 }
 
+/* Tarefas (card azul escuro) */
 .tasklist-container.dark {
   background: #16304a;
-  color: #fff;
+  color: #ffffff;
 }
 
+/* Prioridade / Pendentes (cinza) */
 .tasklist-container.gray {
-  background: #dfe6ee;
+  background: #d1d3d8;
+  color: #16304a;
 }
+
+/* título */
 
 .tasklist-title {
   font-size: 18px;
@@ -21,110 +23,170 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  margin: 0 0 8px;
 }
+
+.tasklist-container.dark .tasklist-title {
+  color: #ffffff;
+}
+
+.tasklist-container.gray .tasklist-title {
+  color: #16304a;
+}
+
+/* linha */
+
+.tasklist-container hr {
+  border: none;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.5);
+  margin: 6px 0 10px;
+}
+
+.tasklist-container.gray hr {
+  background: #c2c4c9;
+}
+
+/* itens */
 
 .task-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #ffffff;
-  padding: 12px;
-  margin-top: 12px;
-  border-radius: 12px;
-  border: 2px solid #dce3ea;
+  background: transparent;
+  padding: 8px 4px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: 0.2s;
-}
-
-.task-item:hover {
-  background: #eef2f7;
+  transition: background 0.15s ease;
 }
 
 .task-item.selected {
-  border-color: #16304a;
-  background: #e6f0ff;
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .task-title-text {
   flex: 1;
   margin-left: 12px;
-  color: #1d1d1d;
+  font-size: 14px;
   font-weight: 500;
+}
+
+.tasklist-container.dark .task-title-text {
+  color: #ffffff;
+}
+
+.tasklist-container.gray .task-title-text {
+  color: #16304a;
 }
 
 .deadline {
   display: block;
   font-size: 12px;
-  font-weight: 600;
-  color: #1d4160;
+  font-weight: 500;
+  opacity: 0.8;
 }
+
+/* checkbox */
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #ffffff;        /* fundo igual para TODAS as colunas */
+  padding: 10px 14px;
+  margin-top: 10px;
+
+  border-radius: 12px;
+  border: 1.8px solid #cdd3da;
+
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+/* Hover igual para todas */
+.task-item:hover {
+  background: #f0f2f5;
+  border-color: #b9c2cb;
+}
+
+/* Quando selecionada (clicada pelo usuário) */
+.task-item.selected {
+  border-color: #16304a;
+  background: #e7eef7;
+}
+
+/* Título da tarefa */
+.task-title-text {
+  flex: 1;
+  margin-left: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1d1d1d;   /* ← AGORA SEMPRE VISÍVEL */
+}
+
+/* Linha de prazo */
+.deadline {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: #4a4a4a;   /* ← Fica visível em qualquer fundo */
+  margin-top: 3px;
+}
+
+
+/* Checkbox */
+.task-item input[type="checkbox"] {
+  transform: scale(1.25);
+  cursor: pointer;
+}
+
+/* =====================
+   BOTÕES (edição, excluir, concluir)
+===================== */
 
 .task-actions {
   display: flex;
+  align-items: center;
   gap: 10px;
 }
 
-
-.task-item input[type="checkbox"] {
-  transform: scale(1.3);
-  cursor: pointer;
-}
-
-.empty-text {
-  margin-top: 10px;
-  font-size: 14px;
-}
-
 .done-btn {
-  background: #2ecc71;
-  color: white;
+  background: #28a745;
+  color: #ffffff;
   border: none;
-  padding: 6px 10px;
-  border-radius: 6px;
+  padding: 6px 9px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 12px;
-  margin-right: 6px;
   transition: 0.2s;
 }
 
 .done-btn:hover {
-  background: #27ae60;
+  background: #1e7e34;
 }
 
-.done-btn {
-  background: #2ecc71;
-  border: none;
-  padding: 6px 8px;
-  border-radius: 6px;
-  cursor: pointer;
-  color: white;
-  margin-right: 8px;
-  transition: 0.2s;
-}
-
-.done-btn:hover {
-  background: #27ae60;
-}
-
-.edit-icon, .delete-icon {
-  cursor: pointer;
-  font-size: 18px;
-  margin-left: 10px;
-  transition: 0.2s ease;
-}
-
-.edit-icon {
-  color: #2980b9;
-}
-
+.edit-icon,
 .delete-icon {
-  color: #b41c1c;
+  font-size: 17px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* Ícone editar */
+.edit-icon {
+  color: #1d75c1;
 }
 
 .edit-icon:hover {
-  color: #1d5275;
+  color: #165a96;
+}
+
+/* Ícone excluir */
+.delete-icon {
+  color: #b62828;
 }
 
 .delete-icon:hover {
-  color: #581b14;
+  color: #8a1d1d;
 }

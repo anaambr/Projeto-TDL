@@ -5,6 +5,7 @@ import "./Register.css";
 
 export default function Register() {
   const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -28,46 +29,72 @@ export default function Register() {
 
   return (
     <div className="auth-container">
+      <div className="auth-card">
+        <div className="auth-logo-row">
+          <div className="auth-logo-icon">📅</div>
+          <span className="auth-logo-text">TDL</span>
+        </div>
 
-      <form className="auth-card" onSubmit={handleSubmit}>
-        <h2>Registrar</h2>
+        <hr className="auth-divider" />
 
-        <label>Nome</label>
-        <input 
-          type="text"
-          placeholder="Seu nome"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
+        <form onSubmit={handleSubmit}>
+          <div className="auth-field">
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
-        <label>Email</label>
-        <input 
-          type="email"
-          placeholder="Digite seu email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+          <div className="auth-field">
+            <input
+              type="password"
+              placeholder="Senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
 
-        <label>Senha</label>
-        <input 
-          type="password"
-          placeholder="Crie uma senha"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+          <div className="auth-field">
+            <input
+              type="text"
+              placeholder="Nome completo"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
 
-        <button className="btn-primary" type="submit" disabled={loading}>
-          {loading ? "Criando conta..." : "Registrar"}
-        </button>
+          <div className="auth-field">
+            <input
+              type="text"
+              placeholder="Nome de usuário"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
 
-        <p className="switch-text">
-          Já tem conta? <Link to="/login">Entrar</Link>
-        </p>
-      </form>
+          <button className="auth-main-btn" type="submit" disabled={loading}>
+            {loading ? "Cadastrando..." : "Cadastrar"}
+          </button>
+        </form>
 
+        <div className="auth-or">
+          <span className="line" />
+          <span className="or-text">Ou</span>
+          <span className="line" />
+        </div>
+
+        <div className="auth-footer">
+          <span>Tem uma conta?</span>
+          <Link to="/login" className="auth-secondary-btn">
+            Login
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

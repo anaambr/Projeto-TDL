@@ -22,33 +22,56 @@ export default function Login({ onLogin }) {
 
   return (
     <div className="auth-container">
-      <form className="auth-card" onSubmit={handleSubmit}>
-        <h2>Login</h2>
+      <div className="auth-card">
+        {/* LOGO / TÍTULO */}
+        <div className="auth-logo-row">
+          <div className="auth-logo-icon">📅</div>
+          <span className="auth-logo-text">TDL</span>
+        </div>
 
-        <label>Email</label>
-        <input
-          type="email"
-          placeholder="Digite seu email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <hr className="auth-divider" />
 
-        <label>Senha</label>
-        <input
-          type="password"
-          placeholder="Digite sua senha"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <form onSubmit={handleSubmit}>
+          <div className="auth-field">
+            <input
+              type="email"
+              placeholder="Usuário"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
-        <button className="btn-primary">Entrar</button>
+          <div className="auth-field">
+            <input
+              type="password"
+              placeholder="Senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
 
-        <p className="switch-text">
-          Ainda não tem conta? <Link to="/register">Criar conta</Link>
-        </p>
-      </form>
+          <button className="auth-main-btn" type="submit">
+            Entrar
+          </button>
+        </form>
+
+        {/* separador "Ou" */}
+        <div className="auth-or">
+          <span className="line" />
+          <span className="or-text">Ou</span>
+          <span className="line" />
+        </div>
+
+        {/* link de cadastro */}
+        <div className="auth-footer">
+          <span>Não tem uma conta?</span>
+          <Link to="/register" className="auth-secondary-btn">
+            Cadastrar
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

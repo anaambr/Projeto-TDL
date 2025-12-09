@@ -1,16 +1,16 @@
 .operations-box {
-  background: #f8faff;
+  background: #d7d9dd;        /* cinza claro elegante */
   border-radius: 18px;
-  border: 2px solid #dce3ea;
+  border: 2px solid #c5c7cc;
   padding: 22px;
-  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
 }
 
 .operations-title {
   font-size: 18px;
   font-weight: 700;
   color: #16304a;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .op-item {
@@ -21,19 +21,23 @@
   border-radius: 12px;
   font-size: 15px;
   cursor: pointer;
-  transition: 0.2s;
   color: #16304a;
+  background: #ffffff;      /* ícone sobre branco, igual outros cards */
+  border: 1.5px solid #cdd3da;
+  transition: 0.2s;
 }
 
 .op-item:hover {
-  background: #dfe6ee;
+  background: #f0f2f5;
+  border-color: #b9c2cb;
 }
 
 .op-item.disabled {
-  opacity: 0.4;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .op-icon {
   font-size: 16px;
+  color: #16304a; /* cor padrão */
 }

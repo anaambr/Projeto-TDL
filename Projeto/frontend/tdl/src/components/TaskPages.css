@@ -1,38 +1,72 @@
 .task-page-container {
   width: 100%;
-  min-height: 100vh;
-  background: #e6ebf2;
+  min-height: calc(100vh - 64px);
+  background: #16304a;
+  border-radius: 18px;
+  padding: 40px 60px;
   display: flex;
-  justify-content: center;
-  padding-top: 40px;
+  gap: 40px;
 }
 
+/* card da esquerda (formulário) */
 .task-card {
-  width: 500px;
-  background: #f9fafc;
+  width: 420px;
+  background: #f4f4f6;
   border-radius: 18px;
   border: 2px solid #dce3ea;
-  padding: 32px 28px;
-  box-shadow: 0px 6px 18px rgba(0,0,0,0.1);
+  padding: 28px 24px 30px;
 }
 
 .task-title {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
   color: #16304a;
+  text-align: center;
 }
 
 .divider {
-  margin: 12px 0 20px;
+  margin: 12px 0 18px;
   border: none;
-  height: 2px;
-  background: #dce3ea;
+  height: 1px;
+  background: #c7ced8;
 }
 
+/* título "Informações da tarefa" */
 .section-title {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   color: #16304a;
-  margin-bottom: 12px;
-  display: block;
+  margin-bottom: 8px;
+}
+
+/* coluna direita "Outras tarefas" (usada se você montar depois) */
+.other-tasks-card {
+  flex: 1;
+  background: #16304a;
+  border-radius: 18px;
+  border: 2px solid #16304a;
+  color: #ffffff;
+  padding: 28px 26px;
+}
+
+.other-tasks-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+
+.other-tasks-card hr {
+  border: none;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.4);
+  margin: 10px 0 14px;
+}
+
+/* lista de outras tarefas (opcional) */
+.other-task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 14px;
 }

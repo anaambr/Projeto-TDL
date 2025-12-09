@@ -1,40 +1,45 @@
 .task-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .task-form input,
 .task-form select,
 .task-form textarea {
   width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  border: 2px solid #cdd6dd;
-  font-size: 15px;
-  color: #000;
-  background: #fff;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid #294766;
+  font-size: 14px;
+  background: #ffffff;
+  color: #16304a;
+  outline: none;
 }
 
 .task-form textarea {
+  border-radius: 18px;
   resize: none;
-  height: 120px;
+  min-height: 120px;
 }
 
+/* botão principal */
+
 .task-btn {
-  margin-top: 10px;
-  padding: 12px;
-  width: 100%;
-  background: #16304a;
-  color: white;
-  border-radius: 12px;
+  margin-top: 12px;
+  width: 170px;
+  align-self: flex-end;
+  padding: 10px 16px;
+  border-radius: 999px;
   border: none;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
+  background: #16304a;
+  color: #ffffff;
   cursor: pointer;
-  transition: .2s;
+  transition: background 0.2s ease;
 }
 
 .task-btn:hover {
-  background: #1d4160;
+  background: #1f4465;
 }
