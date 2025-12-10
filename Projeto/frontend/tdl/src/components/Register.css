@@ -1,7 +1,7 @@
 .auth-container {
   width: 100%;
   height: 100vh;
-  background: #16304a;
+  background: var(--blue-dark); /* muda no dark mode também */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,14 +9,14 @@
 
 .auth-card {
   width: 420px;
-  background: #f3f4f7;
+  background: var(--card-bg);
   border-radius: 14px;
-  padding: 32px 40px 30px;
+  padding: 32px 40px;
   box-shadow: 0px 10px 24px rgba(0, 0, 0, 0.28);
+  color: var(--text-main);
 }
 
-/* logo TDL */
-
+/* Logo */
 .auth-logo-row {
   display: flex;
   align-items: center;
@@ -28,8 +28,8 @@
   width: 38px;
   height: 38px;
   border-radius: 10px;
-  background: #16304a;
-  color: #ffffff;
+  background: var(--blue-dark);
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,20 +39,18 @@
 .auth-logo-text {
   font-size: 28px;
   font-weight: 700;
-  color: #16304a;
+  color: var(--text-main);
 }
 
-/* linha */
-
+/* Divider */
 .auth-divider {
   border: none;
   height: 1px;
-  background: #c7ced6;
+  background: var(--card-border);
   margin: 16px 0 22px;
 }
 
-/* campos */
-
+/* Inputs */
 .auth-field {
   margin-bottom: 12px;
 }
@@ -61,23 +59,22 @@
   width: 100%;
   padding: 10px 16px;
   border-radius: 999px;
-  border: 1px solid #294766;
-  background: #ffffff;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--input-text);
   font-size: 14px;
-  color: #16304a;
   outline: none;
 }
 
-/* botão principal */
-
+/* Botões */
 .auth-main-btn {
   width: 100%;
   margin-top: 10px;
   padding: 10px 16px;
   border-radius: 999px;
   border: none;
-  background: #16304a;
-  color: #ffffff;
+  background: var(--blue-dark);
+  color: white;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
@@ -85,10 +82,8 @@
 }
 
 .auth-main-btn:hover {
-  background: #1e4566;
+  background: var(--blue-dark-2);
 }
-
-/* separador Ou */
 
 .auth-or {
   margin: 22px 0 14px;
@@ -97,36 +92,30 @@
   gap: 8px;
   justify-content: center;
   font-size: 13px;
-  color: #16304a;
+  color: var(--text-main);
 }
 
 .auth-or .line {
   flex: 1;
   height: 1px;
-  background: #c7ced6;
+  background: var(--card-border);
 }
-
-.auth-or .or-text {
-  font-weight: 600;
-}
-
-/* rodapé */
 
 .auth-footer {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
+  color: var(--text-main);
   font-size: 14px;
-  color: #16304a;
 }
 
 .auth-secondary-btn {
   padding: 8px 18px;
   border-radius: 999px;
-  background: #16304a;
-  color: #ffffff;
-  text-decoration: none;
+  background: var(--blue-dark);
+  color: white;
   font-size: 13px;
   font-weight: 600;
+  text-decoration: none;
 }

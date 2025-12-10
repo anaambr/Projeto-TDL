@@ -1,54 +1,44 @@
+.settings-page {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px 40px;
+}
+
 .settings-card {
-  background: #f8faff;
+  background: var(--card-bg);
   padding: 32px;
   border-radius: 18px;
-  border: 2px solid #dce3ea;
+  border: 2px solid var(--card-border);
   width: 100%;
   max-width: 600px;
   margin: 20px auto;
-  box-shadow: 0px 6px 18px rgba(0,0,0,0.08);
+  box-shadow: var(--shadow);
+  color: var(--text-main);
 }
 
 .settings-card h2 {
   font-size: 24px;
   margin-bottom: 18px;
-  color: #16304a;
+  color: var(--text-main);
   font-weight: 700;
 }
 
 .setting-item {
-  background: #fff;
-  border: 2px solid #dce3ea;
+  background: var(--input-bg);
+  border: 2px solid var(--card-border);
   padding: 14px 18px;
   border-radius: 14px;
   margin-bottom: 14px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  color: var(--text-main);
 }
 
 .switch-label {
   font-size: 16px;
-  color: #1e1e1e;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.switch-label input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-}
-
-/* RESPONSIVO */
-@media (max-width: 600px) {
-  .settings-card {
-    padding: 24px;
-  }
-
-  .setting-item {
-    padding: 12px 14px;
-  }
+  color: var(--text-main);
 }

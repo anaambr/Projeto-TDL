@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./Profile.css";
 
 const Profile = () => {
-  // Carrega dados do usuário do localStorage
+
   const storedUser = JSON.parse(localStorage.getItem("user")) || {
-    name: "Usuário Exemplo",
+    name: "Usuário",
     username: "user",
     email: "email@example.com",
   };
@@ -14,7 +14,6 @@ const Profile = () => {
   const [form, setForm] = useState(storedUser);
 
   useEffect(() => {
-
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
 
@@ -28,23 +27,25 @@ const Profile = () => {
   };
 
   return (
-    <section className="profile-page card--dark">
-      <h2 style={{ color: "white" }}>Perfil do Usuário</h2>
+    <section className="profile-page">
 
-      <div className="profile-info">
+      {/* === CARD CENTRAL === */}
+      <div className="profile-card">
+
+        <h2>Perfil do Usuário</h2>
+
         <div className="avatar-large"></div>
 
-        <div className="details">
-          <p><strong>Nome:</strong> {user.name}</p>
-          <p><strong>Username:</strong> @{user.username}</p>
-          <p><strong>Email:</strong> {user.email}</p>
-        </div>
+        <p><strong>Nome:</strong> {user.name}</p>
+        <p><strong>Username:</strong> @{user.username}</p>
+        <p><strong>Email:</strong> {user.email}</p>
+
+        <button className="edit-btn" onClick={() => setIsEditing(true)}>
+          Editar Perfil
+        </button>
       </div>
 
-      <button className="edit-btn" onClick={() => setIsEditing(true)}>
-        Editar Perfil
-      </button>
-
+      {/* === MODAL === */}
       {isEditing && (
         <div className="modal-overlay">
           <div className="modal">
@@ -76,13 +77,12 @@ const Profile = () => {
 
             <div className="modal-actions">
               <button onClick={() => setIsEditing(false)}>Cancelar</button>
-              <button className="save-btn" onClick={saveChanges}>
-                Salvar
-              </button>
+              <button className="save-btn" onClick={saveChanges}>Salvar</button>
             </div>
           </div>
         </div>
       )}
+
     </section>
   );
 };

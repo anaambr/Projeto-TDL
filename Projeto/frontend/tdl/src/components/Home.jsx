@@ -1,31 +1,59 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Calendar from "./Calendar";
+
 import "./Home.css";
-import { FaRocket, FaClipboardList, FaUser } from "react-icons/fa";
 
-export default function Home() {
+const Home = () => {
   return (
-    <section className="home-container">
-      <div className="home-card">
-        <div className="icon-bg">
-          <FaRocket className="home-icon" />
-        </div>
+    <div className="dashboard-grid">
 
-        <h1>Bem-vindo(a) ao TaskFlow!</h1>
-        <p className="subtitle">
-          Organize suas tarefas, metas e rotina em um único lugar.
-        </p>
-
-        <div className="home-buttons">
-          <Link to="/login" className="btn primary">
-            <FaClipboardList /> Acessar Dashboard
-          </Link>
-
-          <Link to="/register" className="btn secondary">
-            <FaUser /> Criar Conta
-          </Link>
+      {/* COLUNA ESQUERDA — TAREFAS */}
+      <div className="dashboard-left">
+        <div className="card-blue">
+          <h2>📋 Tarefas</h2>
+          <div className="card-separator"></div>
+          <p>Nenhuma tarefa.</p>
         </div>
       </div>
-    </section>
+
+      {/* COLUNA DO MEIO — PRIORIDADE • PENDENTES */}
+      <div className="dashboard-mid">
+        <div className="card">
+          <h2>💡 Prioridade</h2>
+          <div className="card-separator"></div>
+          <p>Nenhuma tarefa.</p>
+        </div>
+
+        <div className="card">
+          <h2>⏳ Pendentes</h2>
+          <div className="card-separator"></div>
+          <p>Nenhuma tarefa.</p>
+        </div>
+      </div>
+
+      {/* COLUNA DIREITA — CALENDÁRIO • OPERAÇÕES */}
+      <div className="dashboard-right">
+
+        <div className="card calendar-wrapper">
+          <Calendar />
+        </div>
+
+        <div className="card operations-card">
+          <h2>Operações</h2>
+          <div className="card-separator"></div>
+
+          <button className="op-btn">
+            <span>➕</span> Adicionar tarefa
+          </button>
+
+          <button className="op-btn disabled">
+            <span>✏️</span> Editar tarefa
+          </button>
+        </div>
+
+      </div>
+    </div>
   );
-}
+};
+
+export default Home;

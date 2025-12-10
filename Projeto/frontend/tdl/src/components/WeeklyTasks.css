@@ -1,26 +1,29 @@
+/* container */
 .weekly-container {
-  background: #16304a;
+  background: var(--blue-dark);
   color: #ffffff;
   padding: 18px 20px;
   border-radius: 18px;
   border: 2px solid rgba(255, 255, 255, 0.4);
+  box-shadow: var(--shadow);
 }
 
+/* título */
 .weekly-title {
   display: flex;
   align-items: center;
   gap: 10px;
   font-size: 18px;
   font-weight: 700;
-  margin: 0 0 6px;
+  margin-bottom: 6px;
 }
 
+/* ícone */
 .weekly-icon {
   font-size: 18px;
 }
 
 /* linha */
-
 .weekly-container hr {
   border: none;
   height: 1px;
@@ -28,6 +31,7 @@
   margin: 6px 0 10px;
 }
 
+/* item da semana */
 .weekly-item {
   display: flex;
   align-items: center;
@@ -36,10 +40,12 @@
   font-size: 14px;
 }
 
+/* checkbox */
 .weekly-item input[type="checkbox"] {
   transform: scale(1.1);
 }
 
+/* vazio */
 .empty-week {
   margin-top: 6px;
   font-size: 14px;

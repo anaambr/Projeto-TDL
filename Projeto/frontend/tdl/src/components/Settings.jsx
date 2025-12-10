@@ -4,6 +4,7 @@ import "./Settings.css";
 const Settings = () => {
   const [darkMode, setDarkMode] = useState(false);
 
+  // carregar tema salvo
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
@@ -27,18 +28,19 @@ const Settings = () => {
 
   return (
     <section className="settings-page">
-      <h2 style={{ color: "white" }}>Configurações</h2>
+      <div className="settings-card">
+        <h2>Configurações</h2>
 
-
-      <div className="setting-item">
-        <label>
-          <input 
-            type="checkbox" 
-            checked={darkMode} 
-            onChange={toggleDarkMode}
-          />
-          Tema escuro
-        </label>
+        <div className="setting-item">
+          <label>
+            <input
+              type="checkbox"
+              checked={darkMode}
+              onChange={toggleDarkMode}
+            />{" "}
+            Tema escuro
+          </label>
+        </div>
       </div>
     </section>
   );

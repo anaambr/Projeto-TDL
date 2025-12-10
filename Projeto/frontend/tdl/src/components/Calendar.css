@@ -1,14 +1,19 @@
+/* ===== CARD DO CALENDÁRIO ===== */
+
 .calendar-container {
-  background: #f8fbff;
+  background: var(--card-bg);
   border-radius: 18px;
   overflow: hidden;
-  border: 2px solid #dce3ea;
+  border: 2px solid var(--card-border);
+  box-shadow: var(--shadow);
+  color: var(--text-main);
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
 }
 
-/* cabeçalho azul */
+/* ===== CABEÇALHO (DIA GRANDE + MÊS + ANO) ===== */
 
 .calendar-header-box {
-  background: #4a627f;
+  background: var(--blue-dark);
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -30,9 +35,10 @@
 .calendar-year {
   margin-left: auto;
   font-size: 14px;
+  opacity: 0.9;
 }
 
-/* tabela */
+/* ===== TABELA DE DIAS ===== */
 
 .calendar-table {
   width: 100%;
@@ -41,25 +47,36 @@
   padding: 8px 0;
 }
 
+/* cabeçalho (S T Q Q S S D) */
 .calendar-table th {
   padding: 8px 0;
   font-size: 12px;
-  color: #4a627f;
+  font-weight: 600;
+  color: var(--text-muted);
 }
 
+/* células normais */
 .calendar-table td {
   padding: 6px 0;
   font-size: 13px;
+  color: var(--text-main);
 }
 
+/* dias preenchidos (mês atual) */
 .calendar-table td.filled:hover {
-  background: #e6ebf5;
+  background: var(--blue-soft);
   cursor: pointer;
 }
 
+/* dia de hoje */
 .calendar-table td.today {
-  background: #16304a;
+  background: var(--blue-dark);
   color: #ffffff;
   border-radius: 8px;
   font-weight: 700;
+}
+
+/* células vazias (antes/depois do mês) */
+.calendar-table td.empty {
+  opacity: 0.25;
 }

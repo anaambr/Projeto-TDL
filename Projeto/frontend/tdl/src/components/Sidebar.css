@@ -1,6 +1,6 @@
 .sidebar {
   width: 240px;
-  background: #16304a;
+  background: var(--bg-sidebar);
   color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -8,7 +8,6 @@
 }
 
 /* topo: usuário */
-
 .sidebar .user {
   display: flex;
   align-items: center;
@@ -20,11 +19,10 @@
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: #d9d9d9;
+  background: var(--gray-card);
 }
 
 /* textos do usuário */
-
 .sidebar p {
   margin: 0;
   font-weight: 600;
@@ -40,7 +38,6 @@
 }
 
 /* navegação */
-
 .sidebar nav ul {
   list-style: none;
   padding: 0;
@@ -55,7 +52,6 @@
 }
 
 /* links */
-
 .sidebar a {
   display: flex;
   align-items: center;
@@ -82,7 +78,6 @@
 }
 
 /* parte de baixo */
-
 .bottom {
   margin-top: auto;
   padding-top: 20px;
@@ -97,7 +92,6 @@
 }
 
 /* botão Sair */
-
 .logout {
   display: flex;
   align-items: center;

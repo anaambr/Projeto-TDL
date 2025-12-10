@@ -1,72 +1,60 @@
+/* CONTAINER GERAL */
 .task-page-container {
   width: 100%;
-  min-height: calc(100vh - 64px);
-  background: #16304a;
+  min-height: calc(100vh - 0px);
+
+  background: var(--blue-dark);
   border-radius: 18px;
-  padding: 40px 60px;
+
   display: flex;
-  gap: 40px;
+  align-items: center;
+  justify-content: center;
+
+  padding: 40px 60px;
 }
 
-/* card da esquerda (formulário) */
+/* CARD DO FORMULÁRIO */
 .task-card {
-  width: 420px;
-  background: #f4f4f6;
+  width: 440px;
+  max-width: 100%;
+  background: var(--card-bg);
   border-radius: 18px;
-  border: 2px solid #dce3ea;
-  padding: 28px 24px 30px;
+  border: 2px solid var(--card-border);
+  padding: 32px 28px;
+  box-shadow: var(--shadow);
+  color: var(--text-main);
 }
 
+/* título */
 .task-title {
   font-size: 22px;
   font-weight: 700;
-  color: #16304a;
+  color: var(--text-main);
   text-align: center;
 }
 
+/* linha */
 .divider {
   margin: 12px 0 18px;
   border: none;
   height: 1px;
-  background: #c7ced8;
+  background: var(--card-border);
 }
 
-/* título "Informações da tarefa" */
+/* subtítulo */
 .section-title {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
-  color: #16304a;
-  margin-bottom: 8px;
+  color: var(--text-main);
+  margin-bottom: 10px;
 }
 
-/* coluna direita "Outras tarefas" (usada se você montar depois) */
+/* card de outras tarefas (mantido caso use depois) */
 .other-tasks-card {
   flex: 1;
-  background: #16304a;
-  border-radius: 18px;
-  border: 2px solid #16304a;
+  background: var(--blue-dark);
   color: #ffffff;
-  padding: 28px 26px;
-}
-
-.other-tasks-title {
-  font-size: 22px;
-  font-weight: 700;
-  margin: 0 0 10px;
-}
-
-.other-tasks-card hr {
-  border: none;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.4);
-  margin: 10px 0 14px;
-}
-
-/* lista de outras tarefas (opcional) */
-.other-task-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 8px;
-  font-size: 14px;
+  border-radius: 18px;
+  border: 2px solid var(--blue-dark);
+  padding: 28px;
 }

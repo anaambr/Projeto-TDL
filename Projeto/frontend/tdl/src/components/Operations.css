@@ -1,15 +1,16 @@
 .operations-box {
-  background: #d7d9dd;        /* cinza claro elegante */
+  background: var(--gray-card);
   border-radius: 18px;
-  border: 2px solid #c5c7cc;
+  border: 2px solid var(--card-border);
   padding: 22px;
-  box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
+  box-shadow: var(--shadow);
+  color: var(--text-main);
 }
 
 .operations-title {
   font-size: 18px;
   font-weight: 700;
-  color: #16304a;
+  color: var(--text-main);
   margin-bottom: 12px;
 }
 
@@ -21,15 +22,15 @@
   border-radius: 12px;
   font-size: 15px;
   cursor: pointer;
-  color: #16304a;
-  background: #ffffff;      /* ícone sobre branco, igual outros cards */
-  border: 1.5px solid #cdd3da;
+  color: var(--text-main);
+  background: var(--card-bg);
+  border: 1.5px solid var(--card-border);
   transition: 0.2s;
 }
 
 .op-item:hover {
-  background: #f0f2f5;
-  border-color: #b9c2cb;
+  background: var(--blue-soft);
+  border-color: var(--blue-border);
 }
 
 .op-item.disabled {
@@ -39,5 +40,5 @@
 
 .op-icon {
   font-size: 16px;
-  color: #16304a; /* cor padrão */
+  color: var(--text-main);
 }

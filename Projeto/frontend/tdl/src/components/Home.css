@@ -1,100 +1,127 @@
+/* ===== CONTAINER GERAL DO HOME ===== */
+
 .home-container {
-  background: #e6ebf2;
   width: 100%;
-  height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
-.home-card {
-  background: #f8faff;
-  padding: 40px;
-  width: 420px;
-  border-radius: 20px;
-  text-align: center;
-  box-shadow: 0px 8px 22px rgba(0, 0, 0, 0.15);
-  border: 2px solid #dce3ea;
+.home-content {
+  width: 100%;
+  max-width: 1350px;
+  padding: 20px 30px;
+
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;   /* proporção perfeita */
+  grid-template-rows: auto auto;         /* duas linhas */
+  gap: 24px;                              /* espaçamento consistente */
 }
 
-.icon-bg {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 18px;
+
+/* ===== COLUNA 1 — Tarefas ===== */
+
+.task-box {
+  grid-row: span 2;                       /* ocupa duas linhas */
   background: #16304a;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
+  padding: 22px;
+  border-radius: 18px;
+  color: white;
+  height: 100%;
+  box-shadow: 0px 6px 16px rgba(0,0,0,0.15);
 }
 
-.home-icon {
-  font-size: 34px;
-  color: #ffffff;
+
+/* ===== CARD PADRÃO — PRIORIDADE, PENDENTES, OPERAÇÕES ===== */
+
+.dashboard-card {
+  background: #d8d9dd;
+  padding: 22px;
+  border-radius: 18px;
+  border: 2px solid #c8c9cc;
+  box-shadow: 0px 6px 14px rgba(0,0,0,0.12);
 }
 
-.home-card h1 {
-  font-size: 26px;
+.dashboard-card h3 {
+  margin-bottom: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #16304a;
+}
+
+
+/* ===== CALENDÁRIO ===== */
+
+.calendar-box {
+  background: white;
+  padding: 22px;
+  border-radius: 18px;
+  border: 2px solid #d4d7dc;
+  box-shadow: 0px 6px 14px rgba(0,0,0,0.12);
+  text-align: center;
+}
+
+
+/* ===== OPERAÇÕES ===== */
+
+.operations-box {
+  background: #d7d9dd;
+  padding: 22px;
+  border-radius: 18px;
+  border: 2px solid #c5c7cc;
+  box-shadow: 0px 6px 14px rgba(0,0,0,0.12);
+}
+
+.operations-box h3 {
   margin-bottom: 12px;
   color: #16304a;
+  font-size: 18px;
 }
 
-.subtitle {
-  font-size: 15px;
-  color: #505c66;
-  margin-bottom: 26px;
-}
-
-.home-buttons {
+.operations-buttons {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
-.btn {
-  padding: 12px 16px;
-  border-radius: 12px;
-  text-decoration: none;
+.op-btn {
   display: flex;
-  justify-content: center;
-  gap: 8px;
   align-items: center;
-  font-weight: 600;
-  transition: 0.2s ease-in-out;
-}
-
-/* Botão principal */
-.btn.primary {
-  background: #16304a;
-  color: #ffffff;
-}
-
-.btn.primary:hover {
-  background: #1d4160;
-}
-
-/* Secundário */
-.btn.secondary {
-  background: #dce3ea;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: white;
+  border: 1.8px solid #c9ced1;
+  cursor: pointer;
+  transition: 0.2s ease;
   color: #16304a;
+  font-weight: 600;
 }
 
-.btn.secondary:hover {
-  background: #cbd6df;
+.op-btn:hover {
+  background: #f0f2f5;
 }
 
-/* Responsivo */
-@media (max-width: 500px) {
-  .home-card {
-    width: 85%;
-    padding: 28px;
-  }
 
-  .home-card h1 {
-    font-size: 22px;
-  }
+/* ===== HARMONIZAÇÃO DA PRIMEIRA LINHA ===== */
 
-  .btn {
-    font-size: 15px;
-  }
+.home-content > *:nth-child(1) { /* Tarefas */
+  align-self: stretch;
+}
+
+.home-content > *:nth-child(2) { /* Prioridade */
+  align-self: start;
+}
+
+.home-content > *:nth-child(3) { /* Calendário */
+  align-self: start;
+}
+
+/* ===== SEGUNDA LINHA ===== */
+
+.home-content > *:nth-child(4) { /* Pendentes */
+  align-self: start;
+}
+
+.home-content > *:nth-child(5) { /* Operações */
+  align-self: start;
 }
